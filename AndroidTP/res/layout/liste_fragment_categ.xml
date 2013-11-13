@@ -24,5 +24,12 @@
         android:textColor="@color/vertfluo"
         
          />
+    
+    <View
+       android:layout_width="fill_parent"
+       android:layout_height="1dp"
+       android:background="@color/vertfluo"
+       android:layout_marginBottom="5dp" >
+    </View>
 
 </LinearLayout>

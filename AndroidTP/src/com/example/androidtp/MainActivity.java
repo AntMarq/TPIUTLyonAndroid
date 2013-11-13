@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.content.res.Configuration;
 import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -33,10 +34,7 @@ public class MainActivity extends FragmentActivity
     private String tagVideo = "Video" ;
     private String tagSon = "Son" ;
     private String tagText = "Text" ;
-    private VideoFragment videoFragment = new VideoFragment();
-    private SonFragment sonFragment = new SonFragment() ;
-    private ImageFragment imageFragment = new ImageFragment();
-    private TextFragment textFragment = new TextFragment();
+    private Fragment fragment ;
     private ArrayDrawerData dataDrawer ;
 
     @Override
@@ -141,94 +139,36 @@ public class MainActivity extends FragmentActivity
         {        
         	case 1: 
         	   
-//Display VideoFragment and hide others fragments
-        	
-        	if(manager.findFragmentByTag(tagVideo) == null )
-        	{
-                ft.add(R.id.content_frame,videoFragment,tagVideo)
-                .hide(imageFragment)
-	        	.hide(sonFragment)
-	        	.show(videoFragment);
-               
-        	}	
-        	else
-        	{       	
-        		ft.hide(sonFragment).hide(imageFragment).show(videoFragment) ;   
-        		
-        	}
-        	ft.commit();
+//Display VideoFragment 
+        	fragment = new VideoFragment();
+        	ft.replace(R.id.content_frame, fragment,tagVideo).commit();
             break;
             
         case 2:
   
 //Display Sonfragment and hide others fragments
         	
-        	if(manager.findFragmentByTag(tagSon) == null )
-        	{	        	
-	        	ft .add(R.id.content_frame,sonFragment,tagSon)
-	        	.hide(imageFragment)
-	        	.hide(videoFragment)
-	        	.show(sonFragment); 	        	
-	        	
-        	}
-        	else
-        	{
-        		ft.hide(imageFragment)
-        		.hide(videoFragment)
-        		.show(sonFragment) ;   
-        		
-        	}
-        	ft.commit();  	
+        	fragment = new SonFragment();
+        	ft.replace(R.id.content_frame, fragment,tagSon).commit();
+           
             break;
             
         case 3:
         	
 //Display Imagefragment and hide others fragments 
         	
-        	if(manager.findFragmentByTag(tagImage) == null )
-        	{          
-	            ft.add(R.id.content_frame,imageFragment,tagImage)
-	            .hide(videoFragment)
-	            .hide(sonFragment)
-	            .show(imageFragment);
-      
-        	}
-
-        	else
-        	{
-        		ft.hide(sonFragment)
-        		.hide(videoFragment)
-        		.show(imageFragment);
-        		
-        	}   
-        	
-        	ft.commit();
+        	fragment = new ImageFragment();
+        	ft.replace(R.id.content_frame, fragment,tagImage).commit();
             break;
         
         
     case 4:
     	
-    	//Display Imagefragment and hide others fragments 
+    	//Display Textfragment and hide others fragments 
     	        	
-    	        	if(manager.findFragmentByTag(tagText) == null )
-    	        	{          
-    		            ft.add(R.id.content_frame,imageFragment,tagImage)
-    		            .hide(videoFragment)
-    		            .hide(sonFragment)
-    		            .show(imageFragment);
-    	      
-    	        	}
-
-    	        	else
-    	        	{
-    	        		ft.hide(sonFragment)
-    	        		.hide(videoFragment)
-    	        		.show(imageFragment);
-    	        		
-    	        	}   
-    	        	
-    	        	ft.commit();
-    	            break;
+    	fragment = new TextFragment();
+    	ft.replace(R.id.content_frame, fragment,tagText).commit();
+        break;
     }
         
         // update selected item and title, then close the drawer
