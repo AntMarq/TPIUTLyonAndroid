@@ -1,5 +1,8 @@
 package com.example.androidtp;
 
-public class SonFragment {
+import android.support.v4.app.Fragment;
+
+public class SonFragment extends Fragment
+{
 
 }

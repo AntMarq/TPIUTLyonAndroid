@@ -1,8 +1,12 @@
 package com.example.androidtp;
 
-public class VideoFragment {
+import android.support.v4.app.Fragment;
 
-	public VideoFragment() {
+public class VideoFragment extends Fragment 
+{
+
+	public VideoFragment() 
+	{
 		// TODO Auto-generated constructor stub
 	}
 
