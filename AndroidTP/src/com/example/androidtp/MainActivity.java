@@ -32,9 +32,11 @@ public class MainActivity extends FragmentActivity
     private String tagImage = "Image" ;
     private String tagVideo = "Video" ;
     private String tagSon = "Son" ;
+    private String tagText = "Text" ;
     private VideoFragment videoFragment = new VideoFragment();
     private SonFragment sonFragment = new SonFragment() ;
     private ImageFragment imageFragment = new ImageFragment();
+    private TextFragment textFragment = new TextFragment();
     private ArrayDrawerData dataDrawer ;
 
     @Override
@@ -139,7 +141,7 @@ public class MainActivity extends FragmentActivity
         {        
         	case 1: 
         	   
-//Display ActuListFragment and hide others fragments
+//Display VideoFragment and hide others fragments
         	
         	if(manager.findFragmentByTag(tagVideo) == null )
         	{
@@ -159,7 +161,7 @@ public class MainActivity extends FragmentActivity
             
         case 2:
   
-//Display PharmaListfragment and hide others fragments
+//Display Sonfragment and hide others fragments
         	
         	if(manager.findFragmentByTag(tagSon) == null )
         	{	        	
@@ -181,7 +183,7 @@ public class MainActivity extends FragmentActivity
             
         case 3:
         	
-//Display ShowMapfragment and hide others fragments 
+//Display Imagefragment and hide others fragments 
         	
         	if(manager.findFragmentByTag(tagImage) == null )
         	{          
@@ -202,7 +204,32 @@ public class MainActivity extends FragmentActivity
         	
         	ft.commit();
             break;
-        }
+        
+        
+    case 4:
+    	
+    	//Display Imagefragment and hide others fragments 
+    	        	
+    	        	if(manager.findFragmentByTag(tagText) == null )
+    	        	{          
+    		            ft.add(R.id.content_frame,imageFragment,tagImage)
+    		            .hide(videoFragment)
+    		            .hide(sonFragment)
+    		            .show(imageFragment);
+    	      
+    	        	}
+
+    	        	else
+    	        	{
+    	        		ft.hide(sonFragment)
+    	        		.hide(videoFragment)
+    	        		.show(imageFragment);
+    	        		
+    	        	}   
+    	        	
+    	        	ft.commit();
+    	            break;
+    }
         
         // update selected item and title, then close the drawer
         mDrawerList.setItemChecked(position, true);
