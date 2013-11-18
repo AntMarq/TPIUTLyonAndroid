@@ -2,10 +2,14 @@ package com.example.androidtp;
 
 
 import com.example.androidtp.view.CustomArrayAdapter;
+import com.example.tpandroid.model.MediaManager;
+import com.example.tpandroid.model.MediaLoaderAsync_task;
 import com.example.tpandroid.model.ObjDrawer;
 
 import android.os.Bundle;
+import android.os.Environment;
 import android.app.Activity;
+import android.content.Context;
 import android.content.res.Configuration;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
@@ -86,11 +90,13 @@ public class MainActivity extends FragmentActivity
             }
         };
         mDrawerLayout.setDrawerListener(mDrawerToggle);
+       GlobalMethods.ManageDirectory(MediaManager.getDirectorypath());
 
 //Select default item
         if (savedInstanceState == null) 
         {
             selectItem(1);
+            MediaManager.getInstance();
         }  
     }
 
@@ -150,7 +156,7 @@ public class MainActivity extends FragmentActivity
         	
         	fragment = new SonFragment();
         	ft.replace(R.id.content_frame, fragment,tagSon).commit();
-           
+        	
             break;
             
         case 3:

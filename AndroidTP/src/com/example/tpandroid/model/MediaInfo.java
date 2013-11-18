@@ -1,20 +1,15 @@
 package com.example.tpandroid.model;
 
 
-public class DisplayableFile {
+public class MediaInfo {
 	
 	private String _url;
 	private String _name;
 	private String _version;
-	private Boolean _isInstalled;
-	
-
-	public DisplayableFile() {
-		// TODO Auto-generated constructor stub
-	}
+	private Boolean _isInstalled=false;
 
 
-	public DisplayableFile(String _url, String _name, String _description) {
+	public MediaInfo(String _url, String _name, String _description) {
 		super();
 		this._url = _url;
 		this._name = _name;
