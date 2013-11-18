@@ -1,13 +1,12 @@
 package com.example.tpandroid.model;
 
-import android.graphics.Bitmap;
 
 public class DisplayableFile {
 	
 	private String _url;
 	private String _name;
-	private String _description;
-	private Bitmap _icon;
+	private String _version;
+	private Boolean _isInstalled;
 	
 
 	public DisplayableFile() {
@@ -15,13 +14,11 @@ public class DisplayableFile {
 	}
 
 
-	public DisplayableFile(String _url, String _name, String _description,
-			Bitmap _icon) {
+	public DisplayableFile(String _url, String _name, String _description) {
 		super();
 		this._url = _url;
 		this._name = _name;
-		this._description = _description;
-		this._icon = _icon;
+		this._version = _description;
 	}
 
 
@@ -60,33 +57,29 @@ public class DisplayableFile {
 	/**
 	 * @return the _description
 	 */
-	public String get_description() {
-		return _description;
+	public String get_version() {
+		return _version;
 	}
 
 
 	/**
 	 * @param _description the _description to set
 	 */
-	public void set_description(String _description) {
-		this._description = _description;
+	public void set_version(String _version) {
+		this._version = _version;
 	}
 
 
-	/**
-	 * @return the _icon
-	 */
-	public Bitmap get_icon() {
-		return _icon;
+	public Boolean get_isInstalled() {
+		return _isInstalled;
 	}
 
 
-	/**
-	 * @param _icon the _icon to set
-	 */
-	public void set_icon(Bitmap _icon) {
-		this._icon = _icon;
+	public void set_isInstalled(Boolean _isInstalled) {
+		this._isInstalled = _isInstalled;
 	}
+
+
 	
 	
 
