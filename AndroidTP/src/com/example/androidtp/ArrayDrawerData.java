@@ -3,8 +3,8 @@ package com.example.androidtp;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import com.example.tpandroid.model.CategorieDrawer;
-import com.example.tpandroid.model.ObjDrawer;
+import com.example.androidtp.model.CategorieDrawer;
+import com.example.androidtp.model.ObjDrawer;
 
 import android.content.Context;
 

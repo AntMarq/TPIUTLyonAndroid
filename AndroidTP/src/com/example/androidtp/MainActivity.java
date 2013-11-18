@@ -1,16 +1,8 @@
 package com.example.androidtp;
 
 
-import com.example.androidtp.view.CustomArrayAdapter;
-import com.example.tpandroid.model.MediaManager;
-import com.example.tpandroid.model.MediaLoaderAsync_task;
-import com.example.tpandroid.model.ObjDrawer;
-
-import android.os.Bundle;
-import android.os.Environment;
-import android.app.Activity;
-import android.content.Context;
 import android.content.res.Configuration;
+import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -25,6 +17,10 @@ import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ListView;
+
+import com.example.androidtp.model.MediaManager;
+import com.example.androidtp.model.ObjDrawer;
+import com.example.androidtp.view.CustomArrayAdapter;
 
 public class MainActivity extends FragmentActivity 
 {

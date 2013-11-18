@@ -6,8 +6,8 @@ import com.example.androidtp.R;
 import com.example.androidtp.R.drawable;
 import com.example.androidtp.R.id;
 import com.example.androidtp.R.layout;
-import com.example.tpandroid.model.CategorieDrawer;
-import com.example.tpandroid.model.ObjDrawer;
+import com.example.androidtp.model.CategorieDrawer;
+import com.example.androidtp.model.ObjDrawer;
 
 import android.content.Context;
 import android.view.LayoutInflater;

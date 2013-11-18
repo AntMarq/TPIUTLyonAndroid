@@ -2,7 +2,7 @@ package com.example.androidtp;
 
 import java.io.File;
 
-import com.example.tpandroid.model.MediaManager;
+import com.example.androidtp.model.MediaManager;
 
 import android.app.Application;
 import android.content.Context;

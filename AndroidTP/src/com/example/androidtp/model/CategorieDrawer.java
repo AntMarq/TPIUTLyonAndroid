@@ -1,4 +1,4 @@
-package com.example.tpandroid.model;
+package com.example.androidtp.model;
 
 public class CategorieDrawer 
 {
