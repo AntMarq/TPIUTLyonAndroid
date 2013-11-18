@@ -45,17 +45,14 @@ public class MainActivity extends FragmentActivity
        
         
         mTitle = mDrawerTitle = getTitle();
-     //   menuTitles = getResources().getStringArray(R.array.actu_array);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
         // set a custom shadow that overlays the main content when the drawer opens
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
         // set up the drawer's list view with items and click listener
-    
-      //  mDrawerList.setAdapter(new ArrayAdapter<String>(this,R.layout.drawer_list_item, menuTitles));
+        
         dataDrawer = new ArrayDrawerData(this);
-   //     Log.v(tag, "test list" + dataDrawer.toString());
         mDrawerList.setAdapter(new CustomArrayAdapter (this.getBaseContext(), dataDrawer) );
         
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
@@ -76,13 +73,13 @@ public class MainActivity extends FragmentActivity
             public void onDrawerClosed(View view) 
             {
                 getActionBar().setTitle(mTitle);
-                supportInvalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
 
             public void onDrawerOpened(View drawerView) 
             {
             	getActionBar().setTitle(mDrawerTitle);
-                supportInvalidateOptionsMenu();// creates call to onPrepareOptionsMenu()
+                invalidateOptionsMenu();// creates call to onPrepareOptionsMenu()
             }
         };
         mDrawerLayout.setDrawerListener(mDrawerToggle);
