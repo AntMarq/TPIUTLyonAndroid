@@ -37,6 +37,7 @@ public class MainActivity extends FragmentActivity
     private String tagText = "Text" ;
     private Fragment fragment ;
     private ArrayDrawerData dataDrawer ;
+ 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +91,7 @@ public class MainActivity extends FragmentActivity
         if (savedInstanceState == null) 
         {
         	Log.v(tag, "MainsavedInstanceState");
-        	GlobalMethods.ManageDirectory(MediaManager.getDirectorypath());
+        	GlobalMethods.ManageDirectory(MediaManager.getInstance().getDirectorypath());
             selectItem(1);
            
         }  
@@ -208,7 +209,16 @@ public class MainActivity extends FragmentActivity
         super.onConfigurationChanged(newConfig);
         // Pass any configuration change to the drawer toggls
         mDrawerToggle.onConfigurationChanged(newConfig);
+        
     }
+
+    /**
+     * TODO
+     * launcht the refresh() of the current displayed fragment
+     */
+	public static void refreshFragment() {
+		
+	}
 
     /**
      * Fragment that appears in the "content_frame", shows a planet

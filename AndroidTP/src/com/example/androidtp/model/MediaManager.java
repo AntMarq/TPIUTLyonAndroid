@@ -3,7 +3,6 @@ package com.example.androidtp.model;
 import java.util.ArrayList;
 
 import android.os.Environment;
-import android.os.Handler;
 
 
 
@@ -12,12 +11,15 @@ public class MediaManager {
 /**
 	 * 
 	 */
-private static final String FILENAME="Medias.xml";
-private static final String URL="http://lionel.banand.free.fr/lp_iem/updaterLPIEM.php?type=medias&serial=AAA";
-private static final String DirectoryPath=Environment.getExternalStorageDirectory()+"/media/";
-private static final long serialVersionUID = 1L;
+
+private final String FILENAME="Medias.xml";
+private final String URL="http://lionel.banand.free.fr/lp_iem/updaterLPIEM.php?type=medias&serial=AAA";
+private final String DirectoryPath=Environment.getExternalStorageDirectory()+"/media/";
+private final long serialVersionUID = 1L;
+
+
 private static MediaManager mInstance = null;
-private static ArrayList<ObjMediaInfo> listMedia;
+private  ArrayList<ObjMediaInfo> listMedia;
 
 
 
@@ -71,7 +73,7 @@ public static void setmInstance(MediaManager mInstance) {
 /**
  * @return the directorypath
  */
-public static String getDirectorypath() {
+public String getDirectorypath() {
 	return DirectoryPath;
 }
 
@@ -82,7 +84,10 @@ public ArrayList<ObjMediaInfo> getListMedia() {
 
 
 public void setListMedia(ArrayList<ObjMediaInfo> listMedia) {
-	MediaManager.listMedia = listMedia;
-}
+	this.listMedia = listMedia;
 
 }
+
+	}
+
+

@@ -175,6 +175,9 @@ public class MediaLoaderAsync_task extends AsyncTask<String, Integer, String> {
 			    //reussite du chargement;
 			    loadingResult = 1;
 			   
+			    
+			    //fin du traitement du xml
+			    
 			}
 			catch (XmlPullParserException e)
 			{
