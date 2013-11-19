@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -83,13 +84,15 @@ public class MainActivity extends FragmentActivity
             }
         };
         mDrawerLayout.setDrawerListener(mDrawerToggle);
-       GlobalMethods.ManageDirectory(MediaManager.getDirectorypath());
+      
 
 //Select default item
         if (savedInstanceState == null) 
         {
+        	Log.v(tag, "MainsavedInstanceState");
+        	GlobalMethods.ManageDirectory(MediaManager.getDirectorypath());
             selectItem(1);
-            MediaManager.getInstance();
+           
         }  
     }
 
@@ -133,14 +136,17 @@ public class MainActivity extends FragmentActivity
     {
     	FragmentManager manager = getSupportFragmentManager();
     	FragmentTransaction ft = manager.beginTransaction();
+    	MediaManager.getInstance();
 
         switch (position) 
         {        
         	case 1: 
         	   
 //Display VideoFragment 
+        	Log.v(tagImage, "Display VideoFragment ");
         	fragment = new VideoFragment();
         	ft.replace(R.id.content_frame, fragment,tagVideo).commit();
+        	
             break;
             
         case 2:

@@ -10,47 +10,34 @@ import java.io.OutputStream;
 import java.io.StringReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLConnection;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
+
+import com.example.androidtp.OnXMLLoadFinishedListener;
 
 public class MediaLoaderAsync_task extends AsyncTask<String, Integer, String> {
 
 	
 	String tag = "MediaLoaderAsync_task";
-	private Handler				handler;
+	private OnXMLLoadFinishedListener listener;
 	private Context context;
+	private int loadingResult ;
 	
 
-
-	public MediaLoaderAsync_task() {
+	public MediaLoaderAsync_task() 
+	{
 		
 	}
+	public void setOnXMLLoadFinishedListener(OnXMLLoadFinishedListener listener){
+		  this.listener = listener;
+		}
 	
-	public void setHandler (Handler handler)
-	{
-		this.handler = handler;
-	}
-
-	/**
-	 * @return the handler
-	 */
-	public Handler getHandler ()
-	{
-		return handler;
-	}
-
 	/**
 	 * @param args
 	 */
@@ -133,7 +120,6 @@ public class MediaLoaderAsync_task extends AsyncTask<String, Integer, String> {
 	@Override
 	protected void onPostExecute(String result) 
 	{
-		Message msg = new Message ();
 		if (result != null)
 		{
 			
@@ -186,7 +172,9 @@ public class MediaLoaderAsync_task extends AsyncTask<String, Integer, String> {
 		            }
 		            eventType = xpp.next();
 		        }
-			    msg.arg1 = 1;
+			    //reussite du chargement;
+			    loadingResult = 1;
+			   
 			}
 			catch (XmlPullParserException e)
 			{
@@ -202,9 +190,8 @@ public class MediaLoaderAsync_task extends AsyncTask<String, Integer, String> {
 		else
 		{
 			Log.e (tag, "Une erreur est survenue pendant la recuperation du flux RSS");
-			msg.arg1 = 0;
-		}	
-//Send the message to the handler
-	//	getHandler().sendMessage (msg);
+			 loadingResult = 0;
+		}
+		 listener.onXMLDataReady(loadingResult);
 	}
 }	

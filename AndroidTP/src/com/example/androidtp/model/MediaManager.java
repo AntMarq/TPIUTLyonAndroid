@@ -2,8 +2,8 @@ package com.example.androidtp.model;
 
 import java.util.ArrayList;
 
-import android.content.Context;
 import android.os.Environment;
+import android.os.Handler;
 
 
 
@@ -12,19 +12,21 @@ public class MediaManager {
 /**
 	 * 
 	 */
-private static final long serialVersionUID = 1L;
+private static final String FILENAME="Medias.xml";
 private static final String URL="http://lionel.banand.free.fr/lp_iem/updaterLPIEM.php?type=medias&serial=AAA";
 private static final String DirectoryPath=Environment.getExternalStorageDirectory()+"/media/";
-private static final String FILENAME="Medias.xml";
+private static final long serialVersionUID = 1L;
 private static MediaManager mInstance = null;
 private static ArrayList<ObjMediaInfo> listMedia;
+
+
 
 
 private MediaManager()
 {
 	super();
 	listMedia = new ArrayList<ObjMediaInfo>();
-	new MediaLoaderAsync_task().execute(URL,DirectoryPath,FILENAME );
+	new MediaLoaderAsync_task().execute(URL,DirectoryPath,FILENAME );	
 }
 
 public ArrayList<ObjMediaInfo> getLocalType (String localType)
@@ -39,6 +41,8 @@ public ArrayList<ObjMediaInfo> getLocalType (String localType)
 	}
 	return localMedia ;
 }
+
+
 
 public static MediaManager getInstance()
 {
@@ -80,4 +84,5 @@ public ArrayList<ObjMediaInfo> getListMedia() {
 public void setListMedia(ArrayList<ObjMediaInfo> listMedia) {
 	MediaManager.listMedia = listMedia;
 }
+
 }

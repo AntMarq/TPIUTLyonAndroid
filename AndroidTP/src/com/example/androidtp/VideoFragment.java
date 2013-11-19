@@ -3,51 +3,48 @@ package com.example.androidtp;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.support.v4.app.ListFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
+import com.example.androidtp.model.MediaLoaderAsync_task;
 import com.example.androidtp.model.MediaManager;
 
-public class VideoFragment extends ListFragment 
+public class VideoFragment extends ListFragment implements OnXMLLoadFinishedListener
 {
 	
 	private Handler		listeHandler;
 	private CustomAdapter adapter;
-
+	String tag = "VideoFRagment";
+	
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) 
 	{
+		Log.v(tag, "onCreateView");
 		View view = inflater.inflate (getResources ().getLayout (R.layout.videofragment_layout), container, false);
 		
-		listeHandler = new Handler ()
-		{				
-				public void handleMessage (Message msg)
-				{
-					int done = msg.arg1;
-					if (done == 0)
-					{
-						getActivity().setProgressBarIndeterminateVisibility(false);
-						Toast.makeText (getActivity ().getApplicationContext (), "Une erreur est survenue",Toast.LENGTH_SHORT).show ();
-					}
-					else
-					{							
-						getActivity().setProgressBarIndeterminateVisibility(false);
-						adapter.notifyDataSetChanged ();
-						
-					}
-				}
-		};
+		MediaLoaderAsync_task.setOnXMLLoadFinishedListener(this);
 		
-		adapter = new CustomAdapter(getActivity().getApplicationContext(),MediaManager.getInstance().getLocalType("video"));
+		adapter = new CustomAdapter(getActivity().getApplicationContext(),MediaManager.getInstance().getLocalType("video"));		
 		setListAdapter (adapter);
-
 		return view;
 	}
-	
-	
+
+	public CustomAdapter getAdapter() {
+		return adapter;
+	}
+
+	public void setAdapter(CustomAdapter adapter) {
+		this.adapter = adapter;
+	}
+
+	@Override
+	public void onXMLDataReady(Integer results) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }
