@@ -19,17 +19,36 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 
+import android.content.Context;
 import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 
 public class MediaLoaderAsync_task extends AsyncTask<String, Integer, String> {
 
 	
 	String tag = "MediaLoaderAsync_task";
+	private Handler				handler;
+	private Context context;
 	
-	
+
+
 	public MediaLoaderAsync_task() {
-		// TODO Auto-generated constructor stub
+		
+	}
+	
+	public void setHandler (Handler handler)
+	{
+		this.handler = handler;
+	}
+
+	/**
+	 * @return the handler
+	 */
+	public Handler getHandler ()
+	{
+		return handler;
 	}
 
 	/**
@@ -114,7 +133,7 @@ public class MediaLoaderAsync_task extends AsyncTask<String, Integer, String> {
 	@Override
 	protected void onPostExecute(String result) 
 	{
-		Log.v("MediaoaderAsyncTask","success !" + result);
+		Message msg = new Message ();
 		if (result != null)
 		{
 			
@@ -138,34 +157,22 @@ public class MediaLoaderAsync_task extends AsyncTask<String, Integer, String> {
 		                case XmlPullParser.START_DOCUMENT:
 		                    break;
 		                case XmlPullParser.START_TAG:
-		                    name = xpp.getName();		                    
+		                    name = xpp.getName(); 
 	            		                    
-	                    if (name.equals("media"))
-	                    {	                  	
-							Log.v(tag, "media");
-	                    	newMediaObj = new ObjMediaInfo();          				                    	
+	                    if (name.equalsIgnoreCase("media"))
+	                    {	                  		                    	
+	                    	newMediaObj = new ObjMediaInfo(); 
+	                    	newMediaObj.set_name(xpp.getAttributeValue(null, "name"));
+	                    	newMediaObj.set_type(xpp.getAttributeValue(null, "type"));
+	                    	newMediaObj.set_url(xpp.getAttributeValue(null, "path"));
+	                    	newMediaObj.set_version(xpp.getAttributeValue(null, "versionCode"));
+	                    	
+	                    	Log.v(tag, "name" + newMediaObj.get_name() +" "+
+	                    	"type" + newMediaObj.get_type() +" "+
+	                    	"path" + newMediaObj.get_url() +" "+
+	                    	"versionCode" + newMediaObj.get_version());
 	                    } 
-	                    else if (newMediaObj != null)
-	                    {	                    	
-	                    	if (name.equals("name"))
-		                    {				  			                    						                    				                    		
-	                    		newMediaObj.set_name(xpp.nextText()); 
-	                    		Log.v(tag, "name");
-		                    }
-		                    else if (name.equals("versionCode"))
-		                    {				                        	
-		                    	newMediaObj.set_version(xpp.nextText()); 
-		            
-		                    }
-		                    else if (name.equals("path"))
-		                    {		
-		                    	newMediaObj.set_url(xpp.nextText()); 
-		                    }
-	                        else if (name.equals("type"))
-	                        {	                        	
-	                        	newMediaObj.set_type(xpp.nextText()); 	                        	
-	                        }
-	                    }
+	                   
 	                    break;
 	                	case XmlPullParser.END_TAG:
 	                	
@@ -179,6 +186,7 @@ public class MediaLoaderAsync_task extends AsyncTask<String, Integer, String> {
 		            }
 		            eventType = xpp.next();
 		        }
+			    msg.arg1 = 1;
 			}
 			catch (XmlPullParserException e)
 			{
@@ -191,5 +199,12 @@ public class MediaLoaderAsync_task extends AsyncTask<String, Integer, String> {
 			}
 		
 		}
+		else
+		{
+			Log.e (tag, "Une erreur est survenue pendant la recuperation du flux RSS");
+			msg.arg1 = 0;
+		}	
+//Send the message to the handler
+	//	getHandler().sendMessage (msg);
 	}
 }	

@@ -2,6 +2,7 @@ package com.example.androidtp.model;
 
 import java.util.ArrayList;
 
+import android.content.Context;
 import android.os.Environment;
 
 
@@ -39,11 +40,12 @@ public ArrayList<ObjMediaInfo> getLocalType (String localType)
 	return localMedia ;
 }
 
-public static MediaManager getInstance(){
-if(mInstance == null)
+public static MediaManager getInstance()
 {
-	mInstance = new MediaManager();
-}
+	if(mInstance == null)
+	{
+		mInstance = new MediaManager();
+	}
 return mInstance;
 }
 
