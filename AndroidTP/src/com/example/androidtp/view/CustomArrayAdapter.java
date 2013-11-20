@@ -2,13 +2,6 @@ package com.example.androidtp.view;
 
 import java.util.ArrayList;
 
-import com.example.androidtp.R;
-import com.example.androidtp.R.drawable;
-import com.example.androidtp.R.id;
-import com.example.androidtp.R.layout;
-import com.example.androidtp.model.CategorieDrawer;
-import com.example.androidtp.model.ObjDrawer;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,10 +10,16 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.androidtp.R;
+import com.example.androidtp.model.CategorieDrawer;
+import com.example.androidtp.model.ObjDrawer;
+
 
 public class CustomArrayAdapter extends BaseAdapter
 {
-
+/**
+ * CustomAdapter for the navigation drawer
+ */
 
     private  Context mContext;
     LayoutInflater inflater ;
@@ -30,6 +29,7 @@ public class CustomArrayAdapter extends BaseAdapter
 	private static final int 	 			 	 TYPE_MAX_COUNT = 2;
 	String tag = "CustomArrayAdapter";
 	ViewHolder holder = null;
+	
 	public CustomArrayAdapter(Context context, ArrayList<Object> objDrawer) 
 	{
 		inflater = LayoutInflater.from(context);

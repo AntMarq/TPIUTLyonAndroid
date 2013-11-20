@@ -14,6 +14,10 @@ import com.example.androidtp.model.ObjMediaInfo;
 
 public class CustomAdapter extends BaseAdapter 
 {
+	
+/**
+ * Adapter for VideoFragment
+ */
 	private Context 			 mContext;
 	private ArrayList<ObjMediaInfo> newList ;
 	private LayoutInflater 		 inflater;

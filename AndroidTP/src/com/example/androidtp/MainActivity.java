@@ -90,10 +90,8 @@ public class MainActivity extends FragmentActivity
 //Select default item
         if (savedInstanceState == null) 
         {
-        	Log.v(tag, "MainsavedInstanceState");
         	GlobalMethods.ManageDirectory(MediaManager.getInstance().getDirectorypath());
-            selectItem(1);
-           
+            selectItem(1);           
         }  
     }
 
@@ -214,15 +212,11 @@ public class MainActivity extends FragmentActivity
 
     /**
      * TODO
-     * launcht the refresh() of the current displayed fragment
+     * launch the refresh() of the current displayed fragment
      */
 	public static void refreshFragment() {
 		
 	}
 
-    /**
-     * Fragment that appears in the "content_frame", shows a planet
-     */
-    
     
 }

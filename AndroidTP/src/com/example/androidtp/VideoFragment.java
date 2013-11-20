@@ -1,10 +1,10 @@
 package com.example.androidtp;
 
+
 import java.util.Observable;
 import java.util.Observer;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,9 +13,9 @@ import android.view.ViewGroup;
 
 import com.example.androidtp.model.MediaManager;
 
-public class VideoFragment extends ListFragment implements Observer {
+public class VideoFragment extends ListFragment implements Observer
 
-	private Handler listeHandler;
+{
 	private CustomAdapter adapter;
 	String tag = "VideoFRagment";
 
@@ -23,17 +23,19 @@ public class VideoFragment extends ListFragment implements Observer {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		Log.v(tag, "onCreateView");
+
 		View view = inflater.inflate(
 				getResources().getLayout(R.layout.videofragment_layout),
 				container, false);
 
 		// MediaLoaderAsync_task.setOnXMLLoadFinishedListener(this);
 
-		adapter = new CustomAdapter(getActivity().getApplicationContext(),
-				MediaManager.getInstance().getLocalType("video"));
+		adapter = new CustomAdapter(getActivity().getApplicationContext(),MediaManager.getInstance().getLocalType("video"));
 		setListAdapter(adapter);
 
 		MediaManager.getInstance().addObserver(this);
+		setListAdapter (adapter);
+
 		return view;
 	}
 
@@ -41,7 +43,8 @@ public class VideoFragment extends ListFragment implements Observer {
 		return adapter;
 	}
 
-	public void setAdapter(CustomAdapter adapter) {
+	public void setAdapter(CustomAdapter adapter) 
+	{
 		this.adapter = adapter;
 	}
 
@@ -57,5 +60,4 @@ public class VideoFragment extends ListFragment implements Observer {
 		this.adapter.notifyDataSetChanged();
 
 	}
-
 }

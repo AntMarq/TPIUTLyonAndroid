@@ -75,20 +75,20 @@ public static void setmInstance(MediaManager mInstance) {
 /**
  * @return the directorypath
  */
-public String getDirectorypath() {
-	return DirectoryPath;
-}
+	public String getDirectorypath() {
+		return DirectoryPath;
+	}
 
 
-public ArrayList<ObjMediaInfo> getListMedia() {
-	return listMedia;
-}
-
-
-public void setListMedia(ArrayList<ObjMediaInfo> listMedia) {
-	this.listMedia = listMedia;
-
-}
+	public ArrayList<ObjMediaInfo> getListMedia() {
+		return listMedia;
+	}
+	
+	public void setListMedia(ArrayList<ObjMediaInfo> listMedia) 
+	{
+		this.listMedia = listMedia;
+	
+	}
 }
 
 

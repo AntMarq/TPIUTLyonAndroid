@@ -15,37 +15,19 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 
-import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
-
-import com.example.androidtp.OnXMLLoadFinishedListener;
 
 public class MediaLoaderAsync_task extends AsyncTask<String, Integer, String> {
 
 	
-	String tag = "MediaLoaderAsync_task";
-	private OnXMLLoadFinishedListener listener;
-	private Context context;
-	private int loadingResult ;
+	String tag = "MediaLoaderAsync_task";		
 	
-
 	public MediaLoaderAsync_task() 
 	{
 		
 	}
-	public void setOnXMLLoadFinishedListener(OnXMLLoadFinishedListener listener){
-		  this.listener = listener;
-		}
 	
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
-
 	@Override
 	protected void onPreExecute() {
 
@@ -55,8 +37,6 @@ public class MediaLoaderAsync_task extends AsyncTask<String, Integer, String> {
 	protected void onProgressUpdate(Integer... progress) {
 
 	}
-
-
 
 	@Override
 	protected String doInBackground(String... params) 
@@ -193,10 +173,14 @@ public class MediaLoaderAsync_task extends AsyncTask<String, Integer, String> {
 		else
 		{
 			Log.e (tag, "Une erreur est survenue pendant la recuperation du flux RSS");
+
 		}
 		//TODO changer l'emplacement du bout de code suivant
 		MediaManager.getInstance();
 		MediaManager.getInstance().notifyObservers();
 
+		}
+		 
+
 	}
-}	
+	
