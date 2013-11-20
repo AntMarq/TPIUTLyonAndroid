@@ -80,15 +80,20 @@ public static void setmInstance(MediaManager mInstance) {
 	}
 
 
-	public ArrayList<ObjMediaInfo> getListMedia() {
-		return listMedia;
-	}
-	
-	public void setListMedia(ArrayList<ObjMediaInfo> listMedia) 
-	{
-		this.listMedia = listMedia;
-	
-	}
+public ArrayList<ObjMediaInfo> getListMedia() {
+	return listMedia;
+}
+
+
+public void setListMedia(ArrayList<ObjMediaInfo> listMedia) {
+	this.listMedia = listMedia;
+
+}
+
+public void triggerObservers() {
+setChanged();
+    notifyObservers();
+}
 }
 
 

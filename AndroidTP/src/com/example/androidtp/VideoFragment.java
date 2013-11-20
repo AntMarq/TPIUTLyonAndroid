@@ -52,11 +52,11 @@ public class VideoFragment extends ListFragment implements Observer
 	@Override
 	public void update(Observable observable, Object data) {
 		Log.v("videoFragent", "updatingadapter");
-		/*
-		 * adapter = new
-		 * CustomAdapter(getActivity().getApplicationContext(),MediaManager
-		 * .getInstance().getLocalType("video")); setListAdapter (adapter);
-		 */
+		
+		  adapter = new
+		 CustomAdapter(getActivity().getApplicationContext(),MediaManager
+		 .getInstance().getLocalType("video")); setListAdapter (adapter);
+		 
 		this.adapter.notifyDataSetChanged();
 
 	}

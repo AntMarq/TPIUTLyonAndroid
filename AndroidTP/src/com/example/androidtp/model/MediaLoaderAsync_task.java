@@ -176,8 +176,7 @@ public class MediaLoaderAsync_task extends AsyncTask<String, Integer, String> {
 
 		}
 		//TODO changer l'emplacement du bout de code suivant
-		MediaManager.getInstance();
-		MediaManager.getInstance().notifyObservers();
+		MediaManager.getInstance().triggerObservers();
 
 		}
 		 
