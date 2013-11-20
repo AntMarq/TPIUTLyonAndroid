@@ -173,7 +173,7 @@ public class MediaLoaderAsync_task extends AsyncTask<String, Integer, String> {
 		            eventType = xpp.next();
 		        }
 			    //reussite du chargement;
-			    loadingResult = 1;
+			   
 			   
 			    
 			    //fin du traitement du xml
@@ -193,8 +193,10 @@ public class MediaLoaderAsync_task extends AsyncTask<String, Integer, String> {
 		else
 		{
 			Log.e (tag, "Une erreur est survenue pendant la recuperation du flux RSS");
-			 loadingResult = 0;
 		}
-		 listener.onXMLDataReady(loadingResult);
+		//TODO changer l'emplacement du bout de code suivant
+		MediaManager.getInstance();
+		MediaManager.getInstance().notifyObservers();
+
 	}
 }	

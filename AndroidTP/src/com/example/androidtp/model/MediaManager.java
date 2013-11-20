@@ -1,12 +1,14 @@
 package com.example.androidtp.model;
 
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
 import android.os.Environment;
 
 
 
-public class MediaManager {
+public class MediaManager extends Observable{
 	
 /**
 	 * 
@@ -87,7 +89,6 @@ public void setListMedia(ArrayList<ObjMediaInfo> listMedia) {
 	this.listMedia = listMedia;
 
 }
-
-	}
+}
 
 
