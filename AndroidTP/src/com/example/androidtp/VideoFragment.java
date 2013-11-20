@@ -16,7 +16,7 @@ import com.example.androidtp.model.MediaManager;
 public class VideoFragment extends ListFragment implements Observer
 
 {
-	private CustomAdapter adapter;
+	private VideoCustomAdapter adapter;
 	String tag = "VideoFRagment";
 
 	@Override
@@ -28,36 +28,16 @@ public class VideoFragment extends ListFragment implements Observer
 				getResources().getLayout(R.layout.videofragment_layout),
 				container, false);
 
-		// MediaLoaderAsync_task.setOnXMLLoadFinishedListener(this);
-
-		adapter = new CustomAdapter(getActivity().getApplicationContext(),MediaManager.getInstance().getLocalType("video"));
-		setListAdapter(adapter);
-
 		MediaManager.getInstance().addObserver(this);
-		setListAdapter (adapter);
-
 		return view;
 	}
 
-	public CustomAdapter getAdapter() {
-		return adapter;
-	}
-
-	public void setAdapter(CustomAdapter adapter) 
-	{
-		this.adapter = adapter;
-	}
-
-
 	@Override
 	public void update(Observable observable, Object data) {
-		Log.v("videoFragent", "updatingadapter");
+		Log.v("videoFragent", "updatingadaptervideo");
 		
-		  adapter = new
-		 CustomAdapter(getActivity().getApplicationContext(),MediaManager
-		 .getInstance().getLocalType("video")); setListAdapter (adapter);
-		 
-		this.adapter.notifyDataSetChanged();
+		adapter = new VideoCustomAdapter(getActivity().getApplicationContext(),MediaManager.getInstance().getLocalType("video"));
+		setListAdapter (adapter);
 
 	}
 }

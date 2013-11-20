@@ -12,11 +12,7 @@ import android.net.NetworkInfo;
 public class GlobalMethods extends Application 
 {
 	
-	
-	VideoFragment videoFragment;
-	
-	
-	
+
 	public boolean isOnline(Context currentActivity) {
 		ConnectivityManager cm = (ConnectivityManager) currentActivity
 				.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -43,13 +39,4 @@ public class GlobalMethods extends Application
 		else
 			return file.mkdir();
 	}
-	public VideoFragment getVideoFragment() {
-		return videoFragment;
-	}
-	public void setVideoFragment(VideoFragment videoFragment) {
-		this.videoFragment = videoFragment;
-	}
-	
-	
-
 }

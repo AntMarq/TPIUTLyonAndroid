@@ -154,7 +154,7 @@ public class MediaLoaderAsync_task extends AsyncTask<String, Integer, String> {
 		        }
 			    //reussite du chargement;
 			   
-			   
+			    MediaManager.getInstance().triggerObservers();
 			    
 			    //fin du traitement du xml
 			    
@@ -175,11 +175,5 @@ public class MediaLoaderAsync_task extends AsyncTask<String, Integer, String> {
 			Log.e (tag, "Une erreur est survenue pendant la recuperation du flux RSS");
 
 		}
-		//TODO changer l'emplacement du bout de code suivant
-		MediaManager.getInstance().triggerObservers();
-
-		}
-		 
-
 	}
-	
+}	

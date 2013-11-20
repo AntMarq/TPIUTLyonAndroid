@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.example.androidtp.model.ObjMediaInfo;
 
-public class CustomAdapter extends BaseAdapter 
+public class VideoCustomAdapter extends BaseAdapter 
 {
 	
 /**
@@ -22,7 +22,7 @@ public class CustomAdapter extends BaseAdapter
 	private ArrayList<ObjMediaInfo> newList ;
 	private LayoutInflater 		 inflater;
 	
-	public CustomAdapter(Context context,ArrayList<ObjMediaInfo> arrayList) 
+	public VideoCustomAdapter(Context context,ArrayList<ObjMediaInfo> arrayList) 
 	{		
 		mContext = context;
 		inflater = LayoutInflater.from(context);
