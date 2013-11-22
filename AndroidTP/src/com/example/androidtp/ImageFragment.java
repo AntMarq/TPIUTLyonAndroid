@@ -4,6 +4,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import com.example.androidtp.model.MediaManager;
+import com.example.androidtp.view.ImageCustomAdapter;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

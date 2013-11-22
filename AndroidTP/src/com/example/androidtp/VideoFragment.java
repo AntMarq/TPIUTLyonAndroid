@@ -15,6 +15,7 @@ import android.widget.ListView;
 
 import com.example.androidtp.model.MediaManager;
 import com.example.androidtp.model.ObjMediaInfo;
+import com.example.androidtp.view.VideoCustomAdapter;
 
 
 public class VideoFragment extends ListFragment implements Observer
