@@ -12,34 +12,34 @@ import android.widget.TextView;
 
 import com.example.androidtp.model.ObjMediaInfo;
 
-public class VideoCustomAdapter extends BaseAdapter 
+public class TextCustomAdapter extends BaseAdapter 
 {
 	
 /**
  * Adapter for VideoFragment
  */
 	private Context 			 mContext;
-	private ArrayList<ObjMediaInfo> newList ;
+	private ArrayList<ObjMediaInfo> newtTexList ;
 	private LayoutInflater 		 inflater;
 	
 
-	public VideoCustomAdapter(Context context,ArrayList<ObjMediaInfo> arrayList) 
+	public TextCustomAdapter(Context context,ArrayList<ObjMediaInfo> arrayList) 
 	{		
 		mContext = context;
 		inflater = LayoutInflater.from(context);
-		this.newList = arrayList ;
+		this.newtTexList = arrayList ;
 	}
 	
 	
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
-		return newList.size();
+		return newtTexList.size();
 	}
 
 	@Override
 	public Object getItem(int position) {
-		return newList.get (position);
+		return newtTexList.get (position);
 	}
 
 	@Override
@@ -57,21 +57,21 @@ public class VideoCustomAdapter extends BaseAdapter
 		{
 				holder = new ViewHolder();
 				
-				convertView = inflater.inflate(R.layout.video_cell, null);
+				convertView = inflater.inflate(R.layout.text_cell, null);
 				
-				holder.titleVideo = (TextView)convertView.findViewById (R.id.titre);
-				holder.imageVideo = (ImageView)convertView.findViewById (R.id.image);
-				holder.pathVideo = (TextView)convertView.findViewById (R.id.textpath);
+				holder.titleText = (TextView)convertView.findViewById (R.id.titre);
+				holder.imageText = (ImageView)convertView.findViewById (R.id.image);
+				holder.pathText = (TextView)convertView.findViewById (R.id.textpath);
 	}						
 	else 
 	{
 		holder = (ViewHolder)convertView.getTag();				
 	}
 		
-		final ObjMediaInfo objMedia = ((ObjMediaInfo)(newList.get(position)));
-		holder.titleVideo.setText (objMedia.get_name());
-		holder.imageVideo.setImageResource(R.drawable.video_player);
-		holder.pathVideo.setText( (objMedia.get_url()));
+		final ObjMediaInfo objMedia = ((ObjMediaInfo)(newtTexList.get(position)));
+		holder.titleText.setText (objMedia.get_name());
+		holder.imageText.setImageResource(R.drawable.text);
+		holder.pathText.setText( (objMedia.get_url()));
 		
 	return convertView;			
 }
@@ -79,9 +79,9 @@ public class VideoCustomAdapter extends BaseAdapter
 
 	private class ViewHolder 
 	{
-		TextView 	titleVideo;
-		TextView 	pathVideo;
-		ImageView	imageVideo;
+		TextView 	titleText;
+		TextView 	pathText;
+		ImageView	imageText;
 				
 	}
 

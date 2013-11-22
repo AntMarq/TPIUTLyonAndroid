@@ -12,34 +12,28 @@ import android.widget.TextView;
 
 import com.example.androidtp.model.ObjMediaInfo;
 
-public class VideoCustomAdapter extends BaseAdapter 
+public class SonCustomAdapter extends BaseAdapter
 {
-	
-/**
- * Adapter for VideoFragment
- */
 	private Context 			 mContext;
-	private ArrayList<ObjMediaInfo> newList ;
+	private ArrayList<ObjMediaInfo> newSongList ;
 	private LayoutInflater 		 inflater;
 	
-
-	public VideoCustomAdapter(Context context,ArrayList<ObjMediaInfo> arrayList) 
+	public SonCustomAdapter(Context context,ArrayList<ObjMediaInfo> arrayList) 
 	{		
 		mContext = context;
 		inflater = LayoutInflater.from(context);
-		this.newList = arrayList ;
+		this.newSongList = arrayList ;
 	}
-	
-	
+
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
-		return newList.size();
+		return newSongList.size();
 	}
 
 	@Override
 	public Object getItem(int position) {
-		return newList.get (position);
+		return newSongList.get (position);
 	}
 
 	@Override
@@ -57,7 +51,7 @@ public class VideoCustomAdapter extends BaseAdapter
 		{
 				holder = new ViewHolder();
 				
-				convertView = inflater.inflate(R.layout.video_cell, null);
+				convertView = inflater.inflate(R.layout.son_cell, null);
 				
 				holder.titleVideo = (TextView)convertView.findViewById (R.id.titre);
 				holder.imageVideo = (ImageView)convertView.findViewById (R.id.image);
@@ -68,9 +62,9 @@ public class VideoCustomAdapter extends BaseAdapter
 		holder = (ViewHolder)convertView.getTag();				
 	}
 		
-		final ObjMediaInfo objMedia = ((ObjMediaInfo)(newList.get(position)));
+		final ObjMediaInfo objMedia = ((ObjMediaInfo)(newSongList.get(position)));
 		holder.titleVideo.setText (objMedia.get_name());
-		holder.imageVideo.setImageResource(R.drawable.video_player);
+		holder.imageVideo.setImageResource(R.drawable.music_player);
 		holder.pathVideo.setText( (objMedia.get_url()));
 		
 	return convertView;			
@@ -84,5 +78,4 @@ public class VideoCustomAdapter extends BaseAdapter
 		ImageView	imageVideo;
 				
 	}
-
 }

@@ -43,7 +43,7 @@ public class MediaLoaderAsync_task extends AsyncTask<String, Integer, String> {
 	{
 		String sResponse;
 		StringBuilder sb = new StringBuilder ();
-		// Log.v("MediaLoaderAsync_Task","params[0]= "+params[0]);
+
 		try {
 			int count = 0;
 			URL url = new URL(params[0]);
@@ -146,8 +146,25 @@ public class MediaLoaderAsync_task extends AsyncTask<String, Integer, String> {
 	                    
 	                    if (name.equalsIgnoreCase("media") && newMediaObj != null)
 	                    {
-	                    	MediaManager.getInstance().getListMedia().add(newMediaObj);
-	                    	Log.v(tag, "listMedia" + MediaManager.getInstance().getListMedia().size());
+	                    	/*MediaManager.getInstance().getListMedia().add(newMediaObj);
+	                    	Log.v(tag, "listMedia" + MediaManager.getInstance().getListMedia().size());*/
+	                    	
+	                    	if(newMediaObj.get_type().equalsIgnoreCase("video"))
+	                    	{
+	                    		MediaManager.getInstance().getVideoMedia().add(newMediaObj);
+	                    	}
+	                    	else if (newMediaObj.get_type().equalsIgnoreCase("audio"))
+	                    	{
+	                    		MediaManager.getInstance().getAudioMedia().add(newMediaObj);
+	                    	}
+	                    	else if(newMediaObj.get_type().equalsIgnoreCase("image"))
+	                    	{
+	                    		MediaManager.getInstance().getPictureMedia().add(newMediaObj);
+	                    	}
+	                    	else
+	                    	{
+	                    		MediaManager.getInstance().getTexteMedia().add(newMediaObj);
+	                    	}
 	                    }       
 		            }
 		            eventType = xpp.next();

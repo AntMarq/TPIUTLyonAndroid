@@ -142,7 +142,7 @@ public class MainActivity extends FragmentActivity
         	case 1: 
         	   
 //Display VideoFragment 
-        	Log.v(tagImage, "Display VideoFragment ");
+        	Log.v(tagVideo, "Display VideoFragment ");
         	fragment = new VideoFragment();
         	ft.replace(R.id.content_frame, fragment,tagVideo).commit();
         	
@@ -151,7 +151,7 @@ public class MainActivity extends FragmentActivity
         case 2:
   
 //Display Sonfragment and hide others fragments
-        	
+        	Log.v(tagImage, "Display Sonfragment ");
         	fragment = new SonFragment();
         	ft.replace(R.id.content_frame, fragment,tagSon).commit();
         	
