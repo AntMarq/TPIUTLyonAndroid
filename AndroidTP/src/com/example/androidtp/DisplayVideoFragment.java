@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.androidtp.model.MediaManager;
 import com.example.androidtp.model.ObjMediaInfo;
 
 
@@ -49,6 +48,7 @@ public class DisplayVideoFragment extends Fragment
 			//clic sur l'icone de l'appli donc retour activity précédente
 			getActivity().finish();
 		}
+		
 		return false;
 	}
 	

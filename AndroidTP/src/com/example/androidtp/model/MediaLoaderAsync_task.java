@@ -15,26 +15,34 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+
+import com.example.androidtp.GlobalMethods;
 
 public class MediaLoaderAsync_task extends AsyncTask<String, Integer, String> {
 
 	
-	String tag = "MediaLoaderAsync_task";		
+	private String tag = "MediaLoaderAsync_task";		
+	
 	
 	public MediaLoaderAsync_task() 
 	{
-		
+		super ();
+		Log.v(tag, "MediaLoaderAsync_task");
 	}
 	
+	
 	@Override
-	protected void onPreExecute() {
-
+	protected void onPreExecute() 
+	{
+		
 	};
 
 	@Override
-	protected void onProgressUpdate(Integer... progress) {
+	protected void onProgressUpdate(Integer... progress) 
+	{
 
 	}
 

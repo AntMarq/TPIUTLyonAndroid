@@ -3,6 +3,7 @@ package com.example.androidtp.view;
 import java.util.ArrayList;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +26,7 @@ public class VideoCustomAdapter extends BaseAdapter
 	private Context 			 mContext;
 	private ArrayList<ObjMediaInfo> newList ;
 	private LayoutInflater 		 inflater;
-	
+	private String tag = "VideoCustomAdapter";
 
 	public VideoCustomAdapter(Context context,ArrayList<ObjMediaInfo> arrayList) 
 	{		
@@ -55,7 +56,7 @@ public class VideoCustomAdapter extends BaseAdapter
 	@Override
 	public View getView (int position, View convertView, ViewGroup parent)
 	{
-		ViewHolder holder = null;
+		ViewHolder holder = null ;
 			
 		if (convertView == null)
 		{
@@ -66,13 +67,15 @@ public class VideoCustomAdapter extends BaseAdapter
 				holder.titleVideo = (TextView)convertView.findViewById (R.id.titre);
 				holder.imageVideo = (ImageView)convertView.findViewById (R.id.image);
 				holder.pathVideo = (TextView)convertView.findViewById (R.id.textpath);
-	}						
-	else 
-	{
-		holder = (ViewHolder)convertView.getTag();				
-	}
+				convertView.setTag(holder);
+		}						
+		else 
+		{
+			holder = (ViewHolder)convertView.getTag();				
+		}
 		
 		final ObjMediaInfo objMedia = ((ObjMediaInfo)(newList.get(position)));
+		Log.v(tag, "holder" + holder);
 		holder.titleVideo.setText (objMedia.get_name());
 		holder.imageVideo.setImageResource(R.drawable.video_player);
 		holder.pathVideo.setText( (objMedia.get_url()));

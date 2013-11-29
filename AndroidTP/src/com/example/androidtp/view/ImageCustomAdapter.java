@@ -60,6 +60,7 @@ public class ImageCustomAdapter extends BaseAdapter
 				holder.titlePicture = (TextView)convertView.findViewById (R.id.titre);
 				holder.imagePicture = (ImageView)convertView.findViewById (R.id.image);
 				holder.pathPicture = (TextView)convertView.findViewById (R.id.textpath);
+				convertView.setTag(holder);
 	}						
 	else 
 	{

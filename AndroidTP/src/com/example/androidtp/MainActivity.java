@@ -1,6 +1,7 @@
 package com.example.androidtp;
 
 
+import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -18,6 +19,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.androidtp.model.MediaManager;
 import com.example.androidtp.model.ObjDrawer;
@@ -37,6 +39,9 @@ public class MainActivity extends FragmentActivity
     private String tagText = "Text" ;
     private Fragment fragment ;
     private ArrayDrawerData dataDrawer ;
+    private GlobalMethods application;
+    private Context context;
+
  
 
     @Override
@@ -45,7 +50,6 @@ public class MainActivity extends FragmentActivity
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.activity_main);
        
-        
         mTitle = mDrawerTitle = getTitle();
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
@@ -111,7 +115,8 @@ public class MainActivity extends FragmentActivity
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
         // Only handle with DrawerToggle if the drawer indicator is enabled.
         if (mDrawerToggle.isDrawerIndicatorEnabled() && mDrawerToggle.onOptionsItemSelected(item))        
         {
@@ -135,7 +140,17 @@ public class MainActivity extends FragmentActivity
     {
     	FragmentManager manager = getSupportFragmentManager();
     	FragmentTransaction ft = manager.beginTransaction();
-    	MediaManager.getInstance();
+        application = (GlobalMethods)this.getApplicationContext();
+   
+        if(application.isOnline(this) == true)
+        {
+        	MediaManager.getInstance();
+        	Toast.makeText (application.getBaseContext(), "Réseau internet disponible", 3).show ();
+        }
+        else
+        {
+        	Toast.makeText (application.getBaseContext(), "Réseau non disponible, veuillez vérifier votre connexion internet", 3).show ();
+        }
 
         switch (position) 
         {        
@@ -214,7 +229,8 @@ public class MainActivity extends FragmentActivity
      * TODO
      * launch the refresh() of the current displayed fragment
      */
-	public static void refreshFragment() {
+	public static void refreshFragment() 
+	{
 		
 	}
 

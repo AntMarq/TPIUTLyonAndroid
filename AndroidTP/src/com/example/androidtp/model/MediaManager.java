@@ -2,7 +2,6 @@ package com.example.androidtp.model;
 
 import java.util.ArrayList;
 import java.util.Observable;
-import java.util.Observer;
 
 import android.os.Environment;
 
@@ -19,7 +18,6 @@ private final String URL="http://lionel.banand.free.fr/lp_iem/updaterLPIEM.php?t
 private final String DirectoryPath=Environment.getExternalStorageDirectory()+"/media/";
 private final long serialVersionUID = 1L;
 
-
 private static MediaManager mInstance = null;
 private  ArrayList<ObjMediaInfo> videoMedia;
 private  ArrayList<ObjMediaInfo> audioMedia;
@@ -27,13 +25,15 @@ private  ArrayList<ObjMediaInfo> pictureMedia;
 private  ArrayList<ObjMediaInfo> texteMedia;
 private ObjMediaInfo selectedObjMediaInfo;
 
+
 private MediaManager()
 {
 	super();
 	videoMedia = new ArrayList<ObjMediaInfo>();
 	audioMedia = new ArrayList<ObjMediaInfo>();
 	pictureMedia = new ArrayList<ObjMediaInfo>();
-	texteMedia = new ArrayList<ObjMediaInfo>();
+	texteMedia = new ArrayList<ObjMediaInfo>();	
+	
 	new MediaLoaderAsync_task().execute(URL,DirectoryPath,FILENAME );	
 }
 
@@ -58,6 +58,7 @@ public static MediaManager getInstance()
 	{
 		mInstance = new MediaManager();
 	}
+	
 return mInstance;
 }
 
@@ -126,6 +127,10 @@ public ObjMediaInfo getSelectedObjMediaInfo() {
 
 public void setSelectedObjMediaInfo(ObjMediaInfo selectedObjMediaInfo) {
 	this.selectedObjMediaInfo = selectedObjMediaInfo;
+}
+
+public String getURL() {
+	return URL;
 }
 
 

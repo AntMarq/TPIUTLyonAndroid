@@ -60,6 +60,7 @@ public class SonCustomAdapter extends BaseAdapter
 				holder.titleVideo = (TextView)convertView.findViewById (R.id.titre);
 				holder.imageVideo = (ImageView)convertView.findViewById (R.id.image);
 				holder.pathVideo = (TextView)convertView.findViewById (R.id.textpath);
+				convertView.setTag(holder);
 	}						
 	else 
 	{
