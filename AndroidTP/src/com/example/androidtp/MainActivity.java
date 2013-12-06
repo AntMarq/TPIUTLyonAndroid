@@ -184,7 +184,7 @@ public class MainActivity extends FragmentActivity
     case 4:
     	
     	//Display Textfragment and hide others fragments 
-    	        	
+    	Log.v(tagImage, "Display Sonfragment ");  	
     	fragment = new TextFragment();
     	ft.replace(R.id.content_frame, fragment,tagText).commit();
         break;

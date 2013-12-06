@@ -31,5 +31,6 @@
             </intent-filter>
         </activity>
         <activity android:name="DisplayVideo"></activity>
+        <activity android:name="DisplayText"></activity>
 </application>
 </manifest>

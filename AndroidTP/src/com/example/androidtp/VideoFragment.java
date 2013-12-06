@@ -38,6 +38,7 @@ public class VideoFragment extends ListFragment implements Observer
 		View view = inflater.inflate(getResources().getLayout(R.layout.videofragment_layout),container, false);
 		
 		application = (GlobalMethods) getActivity ().getApplicationContext ();
+		
 		adapter = new VideoCustomAdapter(application,MediaManager.getInstance().getVideoMedia());
 		setListAdapter (adapter);
 
