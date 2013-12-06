@@ -59,7 +59,7 @@ public class TextFragment extends ListFragment implements Observer
 	public void onListItemClick (ListView listView, View view, int position, long id)
 	{
 		ObjMediaInfo detailsText = (ObjMediaInfo) listView.getItemAtPosition (position);
-		TextFragment detailfrag = (TextFragment) getFragmentManager ().findFragmentByTag("Text");
+		TextFragment detailfrag = (TextFragment) getFragmentManager ().findFragmentByTag("Texte");
 
 		if (detailfrag != null && detailfrag.isInLayout ())
 		{
@@ -72,13 +72,13 @@ public class TextFragment extends ListFragment implements Observer
 			application.setSelectedObjMediaInfo(detailsText);
 			
 			//ne marche pas erreure au lancement de DisplayText au moment indiquer par le todo
-//			Intent intent = new Intent (getActivity ().getApplicationContext (), DisplayText.class);
-//			
-//			String abTitle  = MediaManager.getInstance().getTexteMedia().get(position).get_name();
-//			
-//			//Add title in the next fragment actionbar 
-//			intent.putExtra("title", abTitle);
-//			startActivity (intent);
+			Intent intent = new Intent (getActivity ().getApplicationContext (), DisplayText.class);
+			
+			String abTitle  = MediaManager.getInstance().getTexteMedia().get(position).get_name();
+			
+			//Add title in the next fragment actionbar 
+			intent.putExtra("title", abTitle);
+			startActivity (intent);
 		}
 	}
 	
