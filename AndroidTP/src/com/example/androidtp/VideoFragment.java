@@ -32,13 +32,9 @@ public class VideoFragment extends ListFragment implements Observer
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) 
 	{
-		Log.v(tag, "onCreateView");
-		setHasOptionsMenu(true);	
-				
-		View view = inflater.inflate(getResources().getLayout(R.layout.videofragment_layout),container, false);
-		
-		application = (GlobalMethods) getActivity ().getApplicationContext ();
-		
+		setHasOptionsMenu(true);				
+		View view = inflater.inflate(getResources().getLayout(R.layout.videofragment_layout),container, false);	
+		application = (GlobalMethods) getActivity ().getApplicationContext ();		
 		adapter = new VideoCustomAdapter(application,MediaManager.getInstance().getVideoMedia());
 		setListAdapter (adapter);
 
@@ -49,10 +45,8 @@ public class VideoFragment extends ListFragment implements Observer
 	@Override
 	public void update(Observable observable, Object data) 
 	{
-		Log.v("videoFragent", "updatingadaptervideo" );
 		if(mRefresh != null)
-		{
-			
+		{			
 			 MenuItemCompat.setActionView(mRefresh,null);
 		}
 		adapter.notifyDataSetChanged();
@@ -69,16 +63,12 @@ public class VideoFragment extends ListFragment implements Observer
 			// mise à jour
 			GlobalMethods application = (GlobalMethods) getActivity ().getApplicationContext ();
 			application.setSelectedObjMediaInfo(detailsVideo);
-			//MediaManager.getInstance().getVideoMedia().get(position);	
 		}
 		else
 		{
 			application.setSelectedObjMediaInfo(detailsVideo);
-		//	MediaManager.getInstance().getVideoMedia().get(position);
-			Intent intent = new Intent (getActivity ().getApplicationContext (), DisplayVideo.class);
-			
-			String abTitle  = MediaManager.getInstance().getVideoMedia().get(position).get_name();
-			
+			Intent intent = new Intent (getActivity ().getApplicationContext (), DisplayVideo.class);			
+			String abTitle  = MediaManager.getInstance().getVideoMedia().get(position).get_name();			
 			//Add title in the next fragment actionbar 
 			intent.putExtra("title", abTitle);
 			startActivity (intent);

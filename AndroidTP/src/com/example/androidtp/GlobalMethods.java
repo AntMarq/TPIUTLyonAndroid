@@ -2,11 +2,11 @@ package com.example.androidtp;
 
 import java.io.File;
 
+import android.app.ActionBar;
 import android.app.Application;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.example.androidtp.model.MediaLoaderAsync_task;
@@ -33,8 +33,6 @@ public class GlobalMethods extends Application
 	{
 		if(this.isOnline(this.getBaseContext()) == true )
 		{
-		//	MediaManager.getInstance().getVideoMedia().clear();
-			Log.v(tag, "update refreshonline");
 			new MediaLoaderAsync_task().execute(MediaManager.getInstance().getURL(),null,null);
 		}
 		else
@@ -65,13 +63,7 @@ public class GlobalMethods extends Application
 		this.selectedObjMediaInfo = selectedObjMediaInfo;
 	}
 
-	public Fragment get_selectedFragment() {
-		return _selectedFragment;
-	}
-
-	public void set_selectedFragment(Fragment _selectedFragment) {
-		this._selectedFragment = _selectedFragment;
-	}
+	
 	
 	
 }

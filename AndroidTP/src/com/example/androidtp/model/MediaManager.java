@@ -37,21 +37,6 @@ private MediaManager()
 	new MediaLoaderAsync_task().execute(URL,DirectoryPath,FILENAME );	
 }
 
-/*public ArrayList<ObjMediaInfo> getLocalType (String localType)
-{
-	ArrayList<ObjMediaInfo> localMedia = new ArrayList<ObjMediaInfo>() ;
-	for (ObjMediaInfo objMediaInfo : this.getListMedia()) 
-	{
-		if(objMediaInfo.get_type().equalsIgnoreCase(localType))
-		{
-			localMedia.add(objMediaInfo);
-		}
-	}
-	return localMedia ;
-}*/
-
-
-
 public static MediaManager getInstance()
 {
 	if(mInstance == null)
@@ -125,37 +110,7 @@ public ArrayList<ObjMediaInfo> getVideoMedia() {
 	return videoMedia;
 }
 
-public boolean videoArrayContainMediaObject(ObjMediaInfo mediaobject){
-	for(ObjMediaInfo obj :this.getVideoMedia()){
-		if(obj.compareTo(mediaobject)==0)
-			return true;
-	}
-	return false;
-}
 
-public boolean textArrayContainMediaObject(ObjMediaInfo mediaobject){
-	for(ObjMediaInfo obj :this.texteMedia){
-		if(obj.compareTo(mediaobject)==0)
-			return true;
-	}
-	return false;
-}
-
-public boolean imageArrayContainMediaObject(ObjMediaInfo mediaobject){
-	for(ObjMediaInfo obj :this.pictureMedia){
-		if(obj.compareTo(mediaobject)==0)
-			return true;
-	}
-	return false;
-}
-
-public boolean sonArrayContainMediaObject(ObjMediaInfo mediaobject){
-	for(ObjMediaInfo obj :this.audioMedia){
-		if(obj.compareTo(mediaobject)==0)
-			return true;
-	}
-	return false;
-}
 
 public void setVideoMedia(ArrayList<ObjMediaInfo> videoMedia) {
 	this.videoMedia = videoMedia;

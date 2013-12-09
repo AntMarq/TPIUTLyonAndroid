@@ -225,16 +225,5 @@ public class MainActivity extends FragmentActivity
         // Pass any configuration change to the drawer toggls
         mDrawerToggle.onConfigurationChanged(newConfig);
         
-    }
-
-    /**
-     * TODO
-     * launch the refresh() of the current displayed fragment
-     */
-	public static void refreshFragment() 
-	{
-		
-	}
-
-    
+    }    
 }
