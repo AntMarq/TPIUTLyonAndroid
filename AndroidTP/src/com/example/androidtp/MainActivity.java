@@ -178,6 +178,7 @@ public class MainActivity extends FragmentActivity
         	
         	fragment = new ImageFragment();
         	ft.replace(R.id.content_frame, fragment,tagImage).commit();
+       
             break;
         
         
@@ -187,6 +188,7 @@ public class MainActivity extends FragmentActivity
     	Log.v(tagImage, "Display Sonfragment ");  	
     	fragment = new TextFragment();
     	ft.replace(R.id.content_frame, fragment,tagText).commit();
+    	
         break;
     }
         

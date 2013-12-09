@@ -1,7 +1,9 @@
 package com.example.androidtp.model;
 
-public class ObjMediaInfo implements Comparable<ObjMediaInfo> {
 
+
+public class ObjMediaInfo implements Comparable<ObjMediaInfo>{
+	
 	private String _url;
 	private String _name;
 	private String _version;
@@ -81,15 +83,14 @@ public class ObjMediaInfo implements Comparable<ObjMediaInfo> {
 		this._type = _type;
 	}
 
-	@Override
-	public int compareTo(ObjMediaInfo another) {
-		if (another.get_version().equals(this.get_version())
-				&& another.get_name().equals(this.get_name()))
-			// c'est le meme
-			return 0;
-		else
-			return -1;
-	}
-	
 
+	@Override
+	public int compareTo(ObjMediaInfo another) 
+	{
+		 if (another.get_version().equals(this.get_version()) && another.get_name().equals(this.get_name()))
+				   // c'est le meme
+				   return 0;
+				  else
+				   return -1;
+	}
 }

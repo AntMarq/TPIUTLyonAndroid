@@ -45,7 +45,7 @@ public class TextFragment extends ListFragment implements Observer
 	@Override
 	public void update(Observable observable, Object data) {
 
-		Log.v("textFragent", "updatingadaptertext" );
+		
 		if(mRefresh != null)
 		{
 			

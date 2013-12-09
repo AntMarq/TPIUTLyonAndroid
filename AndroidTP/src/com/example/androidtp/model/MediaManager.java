@@ -76,6 +76,38 @@ public static void setmInstance(MediaManager mInstance) {
 	MediaManager.mInstance = mInstance;
 }
 
+public boolean videoArrayContainMediaObject(ObjMediaInfo mediaobject){
+	 for(ObjMediaInfo obj :this.getVideoMedia()){
+	  if(obj.compareTo(mediaobject)== 0)
+	   return true;
+	 }
+	 return false;
+	}
+
+	public boolean textArrayContainMediaObject(ObjMediaInfo mediaobject){
+	 for(ObjMediaInfo obj :this.texteMedia){
+	  if(obj.compareTo(mediaobject)==0)
+	   return true;
+	 }
+	 return false;
+	}
+
+	public boolean imageArrayContainMediaObject(ObjMediaInfo mediaobject){
+	 for(ObjMediaInfo obj :this.pictureMedia){
+	  if(obj.compareTo(mediaobject)==0)
+	   return true;
+	 }
+	 return false;
+	}
+
+	public boolean sonArrayContainMediaObject(ObjMediaInfo mediaobject){
+	 for(ObjMediaInfo obj :this.audioMedia){
+	  if(obj.compareTo(mediaobject)==0)
+	   return true;
+	 }
+	 return false;
+	}
+
 
 /**
  * @return the directorypath
