@@ -159,18 +159,22 @@ public class MediaLoaderAsync_task extends AsyncTask<String, Integer, String> {
 	                    	
 	                    	if(newMediaObj.get_type().equalsIgnoreCase("video"))
 	                    	{
+	                    		if(MediaManager.getInstance().videoArrayContainMediaObject(newMediaObj)==false)
 	                    		MediaManager.getInstance().getVideoMedia().add(newMediaObj);
 	                    	}
 	                    	else if (newMediaObj.get_type().equalsIgnoreCase("audio"))
 	                    	{
+	                    		if(MediaManager.getInstance().sonArrayContainMediaObject(newMediaObj)==false)
 	                    		MediaManager.getInstance().getAudioMedia().add(newMediaObj);
 	                    	}
 	                    	else if(newMediaObj.get_type().equalsIgnoreCase("image"))
 	                    	{
+	                    		if(MediaManager.getInstance().imageArrayContainMediaObject(newMediaObj)==false)
 	                    		MediaManager.getInstance().getPictureMedia().add(newMediaObj);
 	                    	}
 	                    	else
 	                    	{
+	                    		if(MediaManager.getInstance().textArrayContainMediaObject(newMediaObj)==false)
 	                    		MediaManager.getInstance().getTexteMedia().add(newMediaObj);
 	                    	}
 	                    }       

@@ -155,12 +155,12 @@ public class MainActivity extends FragmentActivity
         switch (position) 
         {        
         	case 1: 
-        	   
+        		
+
 //Display VideoFragment 
         	Log.v(tagVideo, "Display VideoFragment ");
         	fragment = new VideoFragment();
-        	ft.replace(R.id.content_frame, fragment,tagVideo).commit();
-        	
+        	ft.replace(R.id.content_frame, fragment,tagVideo).commit();        	
             break;
             
         case 2:

@@ -3,6 +3,7 @@ package com.example.androidtp;
 import java.io.File;
 
 import android.app.Application;
+import android.app.Fragment;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -16,6 +17,7 @@ import com.example.androidtp.model.ObjMediaInfo;
 public class GlobalMethods extends Application 
 {
 	private ObjMediaInfo selectedObjMediaInfo;
+	private Fragment _selectedFragment;
 	private String tag = "GlobalMethods" ;
 
 	public boolean isOnline(Context currentActivity) {
@@ -33,7 +35,7 @@ public class GlobalMethods extends Application
 	{
 		if(this.isOnline(this.getBaseContext()) == true )
 		{
-			MediaManager.getInstance().getVideoMedia().clear();
+			//MediaManager.getInstance().getVideoMedia().clear();
 			Log.v(tag, "update refreshonline");
 			new MediaLoaderAsync_task().execute(MediaManager.getInstance().getURL(),null,null);
 		}
@@ -63,6 +65,14 @@ public class GlobalMethods extends Application
 	}
 	public void setSelectedObjMediaInfo(ObjMediaInfo selectedObjMediaInfo) {
 		this.selectedObjMediaInfo = selectedObjMediaInfo;
+	}
+
+	public Fragment get_selectedFragment() {
+		return _selectedFragment;
+	}
+
+	public void set_selectedFragment(Fragment _selectedFragment) {
+		this._selectedFragment = _selectedFragment;
 	}
 	
 	

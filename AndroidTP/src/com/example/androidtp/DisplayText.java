@@ -15,7 +15,6 @@ public class DisplayText extends FragmentActivity
 	public void onCreate (Bundle savedInstanceState)
 	{
 		super.onCreate (savedInstanceState);
-		//TODO crash ici
 		setContentView (R.layout.displaytext);
 		
 		Intent getAbTitle= getIntent();
