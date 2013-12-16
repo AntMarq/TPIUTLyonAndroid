@@ -75,7 +75,7 @@ public class VideoCustomAdapter extends BaseAdapter
 		}
 		
 		final ObjMediaInfo objMedia = ((ObjMediaInfo)(newList.get(position)));
-		Log.v(tag, "holder" + holder);
+
 		holder.titleVideo.setText (objMedia.get_name());
 		holder.imageVideo.setImageResource(R.drawable.video_player);
 		holder.pathVideo.setText( (objMedia.get_url()));

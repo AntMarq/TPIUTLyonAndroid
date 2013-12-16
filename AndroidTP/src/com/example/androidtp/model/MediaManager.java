@@ -16,6 +16,7 @@ public class MediaManager extends Observable{
 private final String FILENAME="Medias.xml";
 private final String URL="http://lionel.banand.free.fr/lp_iem/updaterLPIEM.php?type=medias&serial=AAA";
 private final String DirectoryPath=Environment.getExternalStorageDirectory()+"/media/";
+private final String BaseUrl = "http://lionel.banand.free.fr/lp_iem" ;
 private final long serialVersionUID = 1L;
 
 private static MediaManager mInstance = null;
@@ -152,6 +153,9 @@ public String getURL() {
 	return URL;
 }
 
+public String getBaseUrl() {
+	return BaseUrl;
+}
 
 
 }

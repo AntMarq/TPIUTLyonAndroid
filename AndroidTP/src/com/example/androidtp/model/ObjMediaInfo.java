@@ -1,14 +1,24 @@
 package com.example.androidtp.model;
 
+import android.graphics.Bitmap;
+import android.widget.ImageView;
 
 
+
+/**
+ * @author anthony
+ *
+ */
 public class ObjMediaInfo implements Comparable<ObjMediaInfo>{
 	
 	private String _url;
 	private String _name;
 	private String _version;
+	private String _content;
 	private Boolean _isInstalled = false;
 	private String _type;
+	private Bitmap _imageView ;
+	
 
 	public ObjMediaInfo() {
 		super();
@@ -82,7 +92,14 @@ public class ObjMediaInfo implements Comparable<ObjMediaInfo>{
 	public void set_type(String _type) {
 		this._type = _type;
 	}
+	
+	public Bitmap get_imageView() {
+		return _imageView;
+	}
 
+	public void set_imageView(Bitmap _imageView) {
+		this._imageView = _imageView;
+	}
 
 	@Override
 	public int compareTo(ObjMediaInfo another) 
@@ -93,4 +110,14 @@ public class ObjMediaInfo implements Comparable<ObjMediaInfo>{
 				  else
 				   return -1;
 	}
+
+	public String get_content() {
+		return _content;
+	}
+
+	public void set_content(String _content) {
+		this._content = _content;
+	}
+	
+	
 }

@@ -2,7 +2,6 @@ package com.example.androidtp;
 
 import java.io.File;
 
-import android.app.ActionBar;
 import android.app.Application;
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -12,11 +11,24 @@ import android.widget.Toast;
 import com.example.androidtp.model.MediaLoaderAsync_task;
 import com.example.androidtp.model.MediaManager;
 import com.example.androidtp.model.ObjMediaInfo;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 public class GlobalMethods extends Application 
 {
 	private ObjMediaInfo selectedObjMediaInfo;
 	private String tag = "GlobalMethods" ;
+	
+	
+	@Override
+    public void onCreate() 
+	{
+          super.onCreate();
+          // Create global configuration and initialize ImageLoader with this configuration
+          ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getApplicationContext())        
+          .build();        
+          ImageLoader.getInstance().init(config);
+     }
 
 	public boolean isOnline(Context currentActivity) {
 		ConnectivityManager cm = (ConnectivityManager) currentActivity.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -56,6 +68,7 @@ public class GlobalMethods extends Application
 		else
 			return file.mkdir();
 	}
+	
 	public ObjMediaInfo getSelectedObjMediaInfo() {
 		return selectedObjMediaInfo;
 	}

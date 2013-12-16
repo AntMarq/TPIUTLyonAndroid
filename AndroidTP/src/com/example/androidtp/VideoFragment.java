@@ -1,10 +1,16 @@
 package com.example.androidtp;
 
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.Observable;
 import java.util.Observer;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.support.v4.view.MenuItemCompat;
@@ -94,4 +100,16 @@ public class VideoFragment extends ListFragment implements Observer
 		}
 			return false;
 	}
+	
+		private class GetActus extends AsyncTask<String, Integer, String>
+		{
+			@Override
+			protected String doInBackground(String... params) 
+			{
+				
+				return null;
+			}
+			
+						
+		}
 }

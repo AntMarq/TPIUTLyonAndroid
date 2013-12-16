@@ -29,6 +29,7 @@ public class DisplayTextFragment extends Fragment{
 		TextView viewTitre = (TextView) view.findViewById (R.id.titre);
 		TextView viewPath = (TextView) view.findViewById (R.id.path);
 		ImageView image = (ImageView) view.findViewById (R.id.imageText);
+		TextView contentText = (TextView) view.findViewById (R.id.contenttext);
 		
 		ObjMediaInfo newObjDetail = application.getSelectedObjMediaInfo();
 	
@@ -36,6 +37,8 @@ public class DisplayTextFragment extends Fragment{
 		viewTitre.setText(newObjDetail.get_name());
 		viewPath.setText(newObjDetail.get_url());
 		image.setImageResource(R.drawable.text);
+		contentText.setText(newObjDetail.get_content());
+		Log.v(tag, "DisplayTextFragment" + newObjDetail.get_content());
 		
 		return view;
 	}

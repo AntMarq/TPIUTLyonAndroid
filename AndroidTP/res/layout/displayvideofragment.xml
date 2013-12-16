@@ -12,7 +12,7 @@
         android:src="@drawable/video_player" />
 
     <TextView
-        android:id="@+id/path"
+        android:id="@+id/contenttext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/imageVideo"
@@ -24,7 +24,7 @@
         android:id="@+id/titre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/path"
+        android:layout_alignLeft="@+id/contenttext"
         android:layout_below="@+id/imageVideo"
         android:layout_marginTop="20dp"
         android:text="TextView" />

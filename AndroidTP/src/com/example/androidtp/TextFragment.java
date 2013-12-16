@@ -43,7 +43,8 @@ public class TextFragment extends ListFragment implements Observer
 	}
 
 	@Override
-	public void update(Observable observable, Object data) {
+	public void update(Observable observable, Object data) 
+	{
 
 		
 		if(mRefresh != null)

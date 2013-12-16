@@ -2,6 +2,7 @@ package com.example.androidtp.model;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,6 +11,7 @@ import java.io.OutputStream;
 import java.io.StringReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLConnection;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -17,15 +19,17 @@ import org.xmlpull.v1.XmlPullParserFactory;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.os.Environment;
 import android.util.Log;
 
 import com.example.androidtp.GlobalMethods;
 
-public class MediaLoaderAsync_task extends AsyncTask<String, Integer, String> {
+public class MediaLoaderAsync_task extends AsyncTask<String, Integer, String> 
+{
 
 	
 	private String tag = "MediaLoaderAsync_task";		
-	
+	ObjMediaInfo newMediaObj = null;
 	
 	public MediaLoaderAsync_task() 
 	{
@@ -67,14 +71,12 @@ public class MediaLoaderAsync_task extends AsyncTask<String, Integer, String> {
 				return sb.toString ();
 			}
 			
-			
 			// getting file length
-			int lenghtOfFile = conection.getContentLength();
+		//	int lenghtOfFile = conection.getContentLength();
 			
 			// input stream to read file - with 8k buffer
 			InputStream input = new BufferedInputStream(url.openStream(), 8192);
 			
-
 				// Output stream to write file
 				OutputStream output = new FileOutputStream(params[1]+params[2]);
 				byte data[] = new byte[1024];
@@ -82,10 +84,6 @@ public class MediaLoaderAsync_task extends AsyncTask<String, Integer, String> {
 				while ((count = input.read(data)) != -1) 
 				{
 					total += count;
-					// publishing the progress....
-					// After this onProgressUpdate will be called
-					// publishProgress("" + (int) ((total * 100) / lenghtOfFile));
-					// writing data to file
 					output.write(data, 0, count);
 				}
 				// flushing output
@@ -120,7 +118,7 @@ public class MediaLoaderAsync_task extends AsyncTask<String, Integer, String> {
 				
 				
 				int eventType = xpp.getEventType();
-				ObjMediaInfo newMediaObj = null;
+		//		ObjMediaInfo newMediaObj = null;
 				 
 			    while (eventType != XmlPullParser.END_DOCUMENT)
 			    {
@@ -141,10 +139,10 @@ public class MediaLoaderAsync_task extends AsyncTask<String, Integer, String> {
 	                    	newMediaObj.set_url(xpp.getAttributeValue(null, "path"));
 	                    	newMediaObj.set_version(xpp.getAttributeValue(null, "versionCode"));
 	                    	
-	                    	Log.v(tag, "name" + newMediaObj.get_name() +" "+
+	                    	/*Log.v(tag, "name" + newMediaObj.get_name() +" "+
 	                    	"type" + newMediaObj.get_type() +" "+
 	                    	"path" + newMediaObj.get_url() +" "+
-	                    	"versionCode" + newMediaObj.get_version());
+	                    	"versionCode" + newMediaObj.get_version());*/
 	                    } 
 	                   
 	                    break;
@@ -176,6 +174,11 @@ public class MediaLoaderAsync_task extends AsyncTask<String, Integer, String> {
 	                    	{
 	                    		if(MediaManager.getInstance().textArrayContainMediaObject(newMediaObj)==false)
 	                    		MediaManager.getInstance().getTexteMedia().add(newMediaObj);
+	                    		
+	                    		String textpath = newMediaObj.get_url();
+	                    		String namefile = newMediaObj.get_name();
+	                    		new GetTextFile ().execute(textpath,namefile);
+	                    		
 	                    	}
 	                    }       
 		            }
@@ -196,13 +199,84 @@ public class MediaLoaderAsync_task extends AsyncTask<String, Integer, String> {
 			{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
-		
+			}		
 		}
 		else
 		{
 			Log.e (tag, "Une erreur est survenue pendant la recuperation du flux RSS");
-
 		}
 	}
+	
+/*Classe de chargement du fichier text 
+ * Necessaire de parser le xml afin d'acquérir le path de l'url pour le dl du fichier text
+ * */ 	
+	private class GetTextFile extends AsyncTask<String, Integer, String>
+	{
+		@Override
+		protected String doInBackground(String... params) 
+		{
+			int count; 
+			String sResponse;
+			StringBuilder sb = new StringBuilder ();
+			try {
+				
+			                URL url2 = new URL(MediaManager.getInstance().getBaseUrl() + params[0] );
+			                Log.v(tag, "test url = " + url2);
+			                HttpURLConnection conexion2 =  (HttpURLConnection)url2.openConnection();
+			                
+			                conexion2.connect();	                    		                
+			                if (conexion2.getResponseCode() == HttpURLConnection.HTTP_OK)
+			    			{
+			    				BufferedReader in = new BufferedReader(new InputStreamReader(conexion2.getInputStream()));
+			    				while ((sResponse = in.readLine ()) != null)
+			    				{
+			    					sb = sb.append (sResponse);
+			    				}
+			    				return sb.toString ();
+			    			}
+			                InputStream is = url2.openStream();			               
+			                File testDirectory = new File(MediaManager.getInstance().getDirectorypath());
+			                if (!testDirectory.exists()) 
+			                {
+			                    testDirectory.mkdir();
+			                }
+			                FileOutputStream fos = new FileOutputStream(testDirectory + "/" + params[1] + ".txt");
+			                byte data[] = new byte[1024];
+			                long total = 0;
+			                
+			                while ((count = is.read(data)) != -1) 
+			                {
+			                    total += count;                 		                  
+			                    fos.write(data, 0, count);
+			                }
+			                is.close();
+			                fos.close();
+			 } 
+			catch (Exception e) 
+			 {
+			       Log.e("ERROR DOWNLOADING","Unable to download" + e.getMessage());
+			 }
+			return null;
+		}
+		
+		
+		@Override
+		protected void onPostExecute(String result) 
+		{
+			Log.v(tag, "onPostExecute" + result);
+			if (result != null)
+			{
+				Log.v(tag, "result parse TextFile" + result);
+				
+				
+				newMediaObj.set_content(result);
+			
+			}
+			
+		}			
+	}
+	
+	
+	
+	
 }	

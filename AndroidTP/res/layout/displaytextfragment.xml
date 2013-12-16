@@ -29,4 +29,13 @@
         android:layout_marginTop="20dp"
         android:text="TextView" />
 
+    <TextView
+        android:id="@+id/contenttext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/path"
+        android:layout_below="@+id/path"
+        android:layout_marginTop="16dp"
+        android:text="TextView" />
+
 </RelativeLayout>
