@@ -57,31 +57,28 @@ public class SonCustomAdapter extends BaseAdapter
 
 			convertView = inflater.inflate(R.layout.son_cell, null);
 
-			holder.titleVideo = (TextView) convertView.findViewById(R.id.titre);
-			holder.imageVideo = (ImageView) convertView
-					.findViewById(R.id.image);
-			holder.pathVideo = (TextView) convertView
-					.findViewById(R.id.textpath);
+			holder.titleSon = (TextView) convertView.findViewById(R.id.titre);
+			holder.imageSon = (ImageView) convertView.findViewById(R.id.image);
+			holder.pathSon = (TextView) convertView.findViewById(R.id.textpath);
 			convertView.setTag(holder);
 		} else
 		{
 			holder = (ViewHolder) convertView.getTag();
 		}
 
-		final ObjMediaInfo objMedia = ((ObjMediaInfo) (newSongList
-				.get(position)));
-		holder.titleVideo.setText(objMedia.get_name());
-		holder.imageVideo.setImageResource(R.drawable.music_player);
-		holder.pathVideo.setText((objMedia.get_url()));
+		final ObjMediaInfo objMedia = ((ObjMediaInfo) (newSongList.get(position)));
+		holder.titleSon.setText(objMedia.get_name());
+		holder.imageSon.setImageResource(R.drawable.music_player);
+		holder.pathSon.setText((objMedia.get_url()));
 
 		return convertView;
 	}
 
 	private class ViewHolder
 	{
-		TextView titleVideo;
-		TextView pathVideo;
-		ImageView imageVideo;
+		TextView titleSon;
+		TextView pathSon;
+		ImageView imageSon;
 
 	}
 }

@@ -16,7 +16,11 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 
+import com.example.androidtp.GlobalMethods;
+
 import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 
 public class MediaLoaderAsync_task extends AsyncTask<String, Integer, String>
@@ -29,7 +33,7 @@ public class MediaLoaderAsync_task extends AsyncTask<String, Integer, String>
 	{
 		super();
 	}
-
+	
 	@Override
 	protected void onPreExecute()
 	{
@@ -52,13 +56,11 @@ public class MediaLoaderAsync_task extends AsyncTask<String, Integer, String>
 		{
 			int count = 0;
 			URL url = new URL(params[0]);
-			HttpURLConnection conection = (HttpURLConnection) url
-					.openConnection();
+			HttpURLConnection conection = (HttpURLConnection) url.openConnection();
 			conection.connect();
 			if (conection.getResponseCode() == HttpURLConnection.HTTP_OK)
 			{
-				BufferedReader in = new BufferedReader(new InputStreamReader(
-						conection.getInputStream()));
+				BufferedReader in = new BufferedReader(new InputStreamReader(conection.getInputStream()));
 				while ((sResponse = in.readLine()) != null)
 				{
 					sb = sb.append(sResponse);
@@ -100,13 +102,13 @@ public class MediaLoaderAsync_task extends AsyncTask<String, Integer, String>
 	@Override
 	protected void onPostExecute(String result)
 	{
+		Message msg = new Message ();
 		if (result != null)
 		{
 
 			try
 			{
-				XmlPullParserFactory factory = XmlPullParserFactory
-						.newInstance();
+				XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
 				factory.setNamespaceAware(true);
 				XmlPullParser xpp = factory.newPullParser();
 				xpp.setInput(new StringReader(result));
@@ -127,21 +129,11 @@ public class MediaLoaderAsync_task extends AsyncTask<String, Integer, String>
 							if (name.equalsIgnoreCase("media"))
 							{
 								newMediaObj = new ObjMediaInfo();
-								newMediaObj.set_name(xpp.getAttributeValue(
-										null, "name"));
-								newMediaObj.set_type(xpp.getAttributeValue(
-										null, "type"));
-								newMediaObj.set_url(xpp.getAttributeValue(null,
-										"path"));
-								newMediaObj.set_version(xpp.getAttributeValue(
-										null, "versionCode"));
+								newMediaObj.set_name(xpp.getAttributeValue(null, "name"));
+								newMediaObj.set_type(xpp.getAttributeValue(null, "type"));
+								newMediaObj.set_url(xpp.getAttributeValue(null, "path"));
+								newMediaObj.set_version(xpp.getAttributeValue(null, "versionCode"));
 
-								/*
-								 * Log.v(tag, "name" + newMediaObj.get_name()
-								 * +" "+ "type" + newMediaObj.get_type() +" "+
-								 * "path" + newMediaObj.get_url() +" "+
-								 * "versionCode" + newMediaObj.get_version());
-								 */
 							}
 
 							break;
@@ -149,57 +141,30 @@ public class MediaLoaderAsync_task extends AsyncTask<String, Integer, String>
 
 							name = xpp.getName();
 
-							if (name.equalsIgnoreCase("media")
-									&& newMediaObj != null)
-							{
-								/*
-								 * MediaManager.getInstance().getListMedia().add(
-								 * newMediaObj); Log.v(tag, "listMedia" +
-								 * MediaManager
-								 * .getInstance().getListMedia().size());
-								 */
+							if (name.equalsIgnoreCase("media") && newMediaObj != null)
+							{								
 
-								if (newMediaObj.get_type().equalsIgnoreCase(
-										"video"))
+								if (newMediaObj.get_type().equalsIgnoreCase("video"))
 								{
-									if (MediaManager.getInstance()
-											.videoArrayContainMediaObject(
-													newMediaObj) == false)
-										MediaManager.getInstance()
-												.getVideoMedia()
-												.add(newMediaObj);
-								} else if (newMediaObj.get_type()
-										.equalsIgnoreCase("audio"))
+									if (MediaManager.getInstance().videoArrayContainMediaObject(newMediaObj) == false)
+										MediaManager.getInstance().getVideoMedia().add(newMediaObj);
+								} else if (newMediaObj.get_type().equalsIgnoreCase("audio"))
 								{
-									if (MediaManager.getInstance()
-											.sonArrayContainMediaObject(
-													newMediaObj) == false)
-										MediaManager.getInstance()
-												.getAudioMedia()
-												.add(newMediaObj);
-								} else if (newMediaObj.get_type()
-										.equalsIgnoreCase("image"))
+									if (MediaManager.getInstance().sonArrayContainMediaObject(newMediaObj) == false)
+										MediaManager.getInstance().getAudioMedia().add(newMediaObj);
+								} else if (newMediaObj.get_type().equalsIgnoreCase("image"))
 								{
-									if (MediaManager.getInstance()
-											.imageArrayContainMediaObject(
-													newMediaObj) == false)
-										MediaManager.getInstance()
-												.getPictureMedia()
-												.add(newMediaObj);
+									if (MediaManager.getInstance().imageArrayContainMediaObject(newMediaObj) == false)
+										MediaManager.getInstance().getPictureMedia().add(newMediaObj);
 								} else
 								{
-									if (MediaManager.getInstance()
-											.textArrayContainMediaObject(
-													newMediaObj) == false)
-										MediaManager.getInstance()
-												.getTexteMedia()
-												.add(newMediaObj);
+									if (MediaManager.getInstance().textArrayContainMediaObject(newMediaObj) == false)
+										MediaManager.getInstance().getTexteMedia().add(newMediaObj);
 
 									String textpath = newMediaObj.get_url();
 									String namefile = newMediaObj.get_name();
 
-									new GetTextFile().execute(textpath,
-											namefile);
+									new GetTextFile().execute(textpath, namefile);
 
 								}
 							}
@@ -221,9 +186,11 @@ public class MediaLoaderAsync_task extends AsyncTask<String, Integer, String>
 			}
 		} else
 		{
-			Log.e(tag,
-					"Une erreur est survenue pendant la recuperation du flux RSS");
+
+			Log.e(tag, "Une erreur est survenue pendant la recuperation du flux RSS");
+			
 		}
+
 	}
 
 	/*
@@ -244,16 +211,13 @@ public class MediaLoaderAsync_task extends AsyncTask<String, Integer, String>
 			try
 			{
 
-				URL url2 = new URL(MediaManager.getInstance().getBaseUrl()
-						+ params[0]);
-				HttpURLConnection conexion2 = (HttpURLConnection) url2
-						.openConnection();
+				URL url2 = new URL(MediaManager.getInstance().getBaseUrl() + params[0]);
+				HttpURLConnection conexion2 = (HttpURLConnection) url2.openConnection();
 				conexion2.connect();
 
 				if (conexion2.getResponseCode() == HttpURLConnection.HTTP_OK)
 				{
-					BufferedReader in = new BufferedReader(
-							new InputStreamReader(conexion2.getInputStream()));
+					BufferedReader in = new BufferedReader(new InputStreamReader(conexion2.getInputStream()));
 					while ((sResponse = in.readLine()) != null)
 					{
 						sb = sb.append(sResponse);
@@ -261,14 +225,12 @@ public class MediaLoaderAsync_task extends AsyncTask<String, Integer, String>
 					return sb.toString();
 				}
 				InputStream is = url2.openStream();
-				File testDirectory = new File(MediaManager.getInstance()
-						.getDirectorypath());
+				File testDirectory = new File(MediaManager.getInstance().getDirectorypath());
 				if (!testDirectory.exists())
 				{
 					testDirectory.mkdir();
 				}
-				FileOutputStream fos = new FileOutputStream(testDirectory + "/"
-						+ params[1] + ".txt");
+				FileOutputStream fos = new FileOutputStream(testDirectory + "/" + params[1] + ".txt");
 				byte data[] = new byte[1024];
 				long total = 0;
 
@@ -281,8 +243,7 @@ public class MediaLoaderAsync_task extends AsyncTask<String, Integer, String>
 				fos.close();
 			} catch (Exception e)
 			{
-				Log.e("ERROR DOWNLOADING",
-						"Unable to download" + e.getMessage());
+				Log.e("ERROR DOWNLOADING", "Unable to download" + e.getMessage());
 			}
 			return null;
 		}
@@ -291,13 +252,13 @@ public class MediaLoaderAsync_task extends AsyncTask<String, Integer, String>
 		protected void onPostExecute(String result)
 		{
 			Log.v(tag, "onPostExecute" + result);
+
 			if (result != null)
 			{
 				Log.v(tag, "result parse TextFile" + result);
 				Log.v(tag, "test object" + newMediaObj.get_name());
 
-				for (ObjMediaInfo obj : MediaManager.getInstance()
-						.getTexteMedia())
+				for (ObjMediaInfo obj : MediaManager.getInstance().getTexteMedia())
 				{
 					if (obj.get_name().equals(ObjName))
 					{

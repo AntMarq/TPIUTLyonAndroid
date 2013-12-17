@@ -65,16 +65,12 @@ public class CustomArrayAdapter extends BaseAdapter
 				case TYPE_ITEM :
 
 					convertView = inflater.inflate(R.layout.select_item, null);
-					holder.titre = (TextView) convertView
-							.findViewById(R.id.item_title);
-					holder.image = (ImageView) convertView
-							.findViewById(R.id.item_icon);
+					holder.titre = (TextView) convertView.findViewById(R.id.item_title);
+					holder.image = (ImageView) convertView.findViewById(R.id.item_icon);
 					break;
 				case TYPE_SEPARATOR :
-					convertView = inflater.inflate(
-							R.layout.liste_fragment_categ, null);
-					holder.categDrawer = (TextView) convertView
-							.findViewById(R.id.nomCateg);
+					convertView = inflater.inflate(R.layout.liste_fragment_categ, null);
+					holder.categDrawer = (TextView) convertView.findViewById(R.id.nomCateg);
 					break;
 			}
 			convertView.setTag(holder);
@@ -87,9 +83,7 @@ public class CustomArrayAdapter extends BaseAdapter
 
 			case TYPE_ITEM :
 
-				holder.titre
-						.setText((((ObjDrawer) listObjDrawer.get(position)))
-								.getTitle());
+				holder.titre.setText((((ObjDrawer) listObjDrawer.get(position))).getTitle());
 
 				if (holder.titre.getText().equals("Video"))
 				{
@@ -108,8 +102,7 @@ public class CustomArrayAdapter extends BaseAdapter
 				break;
 
 			case TYPE_SEPARATOR :
-				holder.categDrawer.setText((((CategorieDrawer) listObjDrawer
-						.get(position))).getCateg().toString());
+				holder.categDrawer.setText((((CategorieDrawer) listObjDrawer.get(position))).getCateg().toString());
 				break;
 		}
 

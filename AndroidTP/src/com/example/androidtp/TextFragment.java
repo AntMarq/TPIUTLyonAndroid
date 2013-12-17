@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class TextFragment extends ListFragment implements Observer
 {
@@ -111,8 +112,16 @@ public class TextFragment extends ListFragment implements Observer
 		{
 			case R.id.refresh :
 				mRefresh = item;
-				MenuItemCompat.setActionView(mRefresh, R.layout.progressbar);
-				application.refreshOnline();
+				if (application.isOnline(getActivity().getApplicationContext()) == true)
+				{
+					MenuItemCompat.setActionView(mRefresh, R.layout.progressbar);
+					application.refreshOnline();
+				} else
+				{
+					Toast.makeText(application.getBaseContext(),
+							"Veuillez activer votre connexion internet", 3).show();
+				}
+
 				break;
 		}
 		return false;

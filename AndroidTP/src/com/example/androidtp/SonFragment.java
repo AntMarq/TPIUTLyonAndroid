@@ -12,6 +12,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.androidtp.model.MediaManager;
 import com.example.androidtp.view.SonCustomAdapter;
@@ -71,8 +72,16 @@ public class SonFragment extends ListFragment implements Observer
 		{
 			case R.id.refresh :
 				mRefresh = item;
-				MenuItemCompat.setActionView(mRefresh, R.layout.progressbar);
-				application.refreshOnline();
+				if (application.isOnline(getActivity().getApplicationContext()) == true)
+				{
+					MenuItemCompat.setActionView(mRefresh, R.layout.progressbar);
+					application.refreshOnline();
+				} else
+				{
+					Toast.makeText(application.getBaseContext(),
+							"Veuillez activer votre connexion internet", 3).show();
+				}
+
 				break;
 		}
 		return false;

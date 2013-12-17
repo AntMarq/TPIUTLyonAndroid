@@ -3,7 +3,10 @@ package com.example.androidtp.model;
 import java.util.ArrayList;
 import java.util.Observable;
 
+import com.example.androidtp.DMBroadcastReceiver;
+
 import android.os.Environment;
+import android.os.Handler;
 
 public class MediaManager extends Observable
 {
@@ -25,6 +28,9 @@ public class MediaManager extends Observable
 	private ArrayList<ObjMediaInfo> pictureMedia;
 	private ArrayList<ObjMediaInfo> texteMedia;
 	private ObjMediaInfo selectedObjMediaInfo;
+	private MediaLoaderAsync_task mediaLoader ;
+	
+
 
 	private MediaManager()
 	{
@@ -33,8 +39,9 @@ public class MediaManager extends Observable
 		audioMedia = new ArrayList<ObjMediaInfo>();
 		pictureMedia = new ArrayList<ObjMediaInfo>();
 		texteMedia = new ArrayList<ObjMediaInfo>();
-
-		new MediaLoaderAsync_task().execute(URL, DirectoryPath, FILENAME);
+		mediaLoader = new MediaLoaderAsync_task();
+		mediaLoader.execute(URL, DirectoryPath, FILENAME);
+		
 	}
 
 	public static MediaManager getInstance()
@@ -178,4 +185,5 @@ public class MediaManager extends Observable
 		return BaseUrl;
 	}
 
+	
 }

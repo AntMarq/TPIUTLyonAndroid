@@ -64,20 +64,16 @@ public class ImageCustomAdapter extends BaseAdapter
 
 			convertView = inflater.inflate(R.layout.image_cell, null);
 
-			holder.titlePicture = (TextView) convertView
-					.findViewById(R.id.titre);
-			holder.imagePicture = (ImageView) convertView
-					.findViewById(R.id.image);
-			holder.pathPicture = (TextView) convertView
-					.findViewById(R.id.textpath);
+			holder.titlePicture = (TextView) convertView.findViewById(R.id.titre);
+			holder.imagePicture = (ImageView) convertView.findViewById(R.id.image);
+			holder.pathPicture = (TextView) convertView.findViewById(R.id.textpath);
 			convertView.setTag(holder);
 		} else
 		{
 			holder = (ViewHolder) convertView.getTag();
 		}
 
-		final ObjMediaInfo objMedia = ((ObjMediaInfo) (newPictureList
-				.get(position)));
+		final ObjMediaInfo objMedia = ((ObjMediaInfo) (newPictureList.get(position)));
 		holder.titlePicture.setText(objMedia.get_name());
 		holder.imagePicture.setImageBitmap(objMedia.get_imageView());
 		holder.pathPicture.setText((objMedia.get_url()));
@@ -86,36 +82,30 @@ public class ImageCustomAdapter extends BaseAdapter
 		if (objMedia.get_url() != null)
 		{
 
-			DisplayImageOptions options = new DisplayImageOptions.Builder()
-					.cacheInMemory(true) // default
+			DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true) // default
 					.cacheOnDisc(true).build();
 
-			imageLoader.displayImage(MediaManager.getInstance().getBaseUrl()
-					+ objMedia.get_url(), holder.imagePicture, options,
-					new ImageLoadingListener()
+			imageLoader.displayImage(MediaManager.getInstance().getBaseUrl() + objMedia.get_url(), holder.imagePicture,
+					options, new ImageLoadingListener()
 					{
 						@Override
 						public void onLoadingStarted(String imageUri, View view)
 						{
-
+							finalHolder.imagePicture.setImageResource(R.drawable.picture);
 						}
 						@Override
-						public void onLoadingFailed(String imageUri, View view,
-								FailReason failReason)
+						public void onLoadingFailed(String imageUri, View view, FailReason failReason)
 						{
-							finalHolder.imagePicture
-									.setImageResource(R.drawable.picture);
+							finalHolder.imagePicture.setImageResource(R.drawable.picture);
 
 						}
 						@Override
-						public void onLoadingComplete(String imageUri,
-								View view, Bitmap loadedImage)
+						public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage)
 						{
 
 						}
 						@Override
-						public void onLoadingCancelled(String imageUri,
-								View view)
+						public void onLoadingCancelled(String imageUri, View view)
 						{
 
 						}

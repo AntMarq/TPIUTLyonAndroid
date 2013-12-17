@@ -10,7 +10,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -40,6 +39,8 @@ public class MainActivity extends FragmentActivity
 	private ArrayDrawerData dataDrawer;
 	private GlobalMethods application;
 	private Context context;
+	
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -47,6 +48,7 @@ public class MainActivity extends FragmentActivity
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		setContentView(R.layout.activity_main);
+		
 
 		mTitle = mDrawerTitle = getTitle();
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -54,13 +56,11 @@ public class MainActivity extends FragmentActivity
 
 		// set a custom shadow that overlays the main content when the drawer
 		// opens
-		mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow,
-				GravityCompat.START);
+		mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
 		// set up the drawer's list view with items and click listener
 
 		dataDrawer = new ArrayDrawerData(this);
-		mDrawerList.setAdapter(new CustomArrayAdapter(this.getBaseContext(),
-				dataDrawer));
+		mDrawerList.setAdapter(new CustomArrayAdapter(this.getBaseContext(), dataDrawer));
 
 		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
@@ -96,8 +96,17 @@ public class MainActivity extends FragmentActivity
 		// Select default item
 		if (savedInstanceState == null)
 		{
-			GlobalMethods.ManageDirectory(MediaManager.getInstance()
-					.getDirectorypath());
+			GlobalMethods.ManageDirectory(MediaManager.getInstance().getDirectorypath());
+			/*if (application.isOnline(this) == true)
+			{
+				Toast.makeText(application.getBaseContext(),
+						"Vous etes connecté à internet", 3).show();		
+			} 
+			else
+			{
+				Toast.makeText(application.getBaseContext(),
+						"Vous etes connecté à internet", 3).show();		
+			}*/
 			selectItem(1);
 		}
 	}
@@ -121,24 +130,20 @@ public class MainActivity extends FragmentActivity
 	public boolean onOptionsItemSelected(MenuItem item)
 	{
 		// Only handle with DrawerToggle if the drawer indicator is enabled.
-		if (mDrawerToggle.isDrawerIndicatorEnabled()
-				&& mDrawerToggle.onOptionsItemSelected(item))
+		if (mDrawerToggle.isDrawerIndicatorEnabled() && mDrawerToggle.onOptionsItemSelected(item))
 		{
+			
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
 	}
 
 	/* The click listner for ListView in the navigation drawer */
-	private class DrawerItemClickListener
-			implements
-				ListView.OnItemClickListener
+	private class DrawerItemClickListener implements ListView.OnItemClickListener
 	{
 		@Override
-		public void onItemClick(AdapterView<?> parent, View view, int position,
-				long id)
+		public void onItemClick(AdapterView<?> parent, View view, int position, long id)
 		{
-
 			selectItem(position);
 		}
 	}
@@ -148,21 +153,15 @@ public class MainActivity extends FragmentActivity
 		FragmentManager manager = getSupportFragmentManager();
 		FragmentTransaction ft = manager.beginTransaction();
 		application = (GlobalMethods) this.getApplicationContext();
-
+		
+		//mConnReceiver = new DMBroadcastReceiver();
+		//this.registerReceiver(this.mConnReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+		
 		if (application.isOnline(this) == true)
 		{
-			MediaManager.getInstance();
-			Toast.makeText(application.getBaseContext(),
-					"Réseau internet disponible", 3).show();
-		} else
-		{
-			Toast.makeText(
-					application.getBaseContext(),
-					"Réseau non disponible, veuillez vérifier votre connexion internet",
-					3).show();
-
-		}
-
+			MediaManager.getInstance();			
+		} 
+	
 		switch (position)
 		{
 			case 1 :
@@ -183,7 +182,6 @@ public class MainActivity extends FragmentActivity
 			case 3 :
 
 				// Display Imagefragment and hide others fragments
-
 				fragment = new ImageFragment();
 				ft.replace(R.id.content_frame, fragment, tagImage).commit();
 
@@ -232,6 +230,16 @@ public class MainActivity extends FragmentActivity
 		super.onConfigurationChanged(newConfig);
 		// Pass any configuration change to the drawer toggls
 		mDrawerToggle.onConfigurationChanged(newConfig);
+	}
 
+	public void onPause()
+	{
+		super.onPause();
+
+	}
+
+	public void onResume()
+	{
+		super.onResume();
 	}
 }

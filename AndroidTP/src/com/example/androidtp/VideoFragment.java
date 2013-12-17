@@ -5,6 +5,8 @@ import java.util.Observer;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.ListFragment;
 import android.support.v4.view.MenuItemCompat;
 import android.view.LayoutInflater;
@@ -14,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.androidtp.model.MediaManager;
 import com.example.androidtp.model.ObjMediaInfo;
@@ -27,16 +30,13 @@ public class VideoFragment extends ListFragment implements Observer
 	private MenuItem mRefresh = null;
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState)
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
 		setHasOptionsMenu(true);
-		View view = inflater.inflate(
-				getResources().getLayout(R.layout.videofragment_layout),
-				container, false);
+		View view = inflater.inflate(getResources().getLayout(R.layout.videofragment_layout), container, false);
+
 		application = (GlobalMethods) getActivity().getApplicationContext();
-		adapter = new VideoCustomAdapter(application, MediaManager
-				.getInstance().getVideoMedia());
+		adapter = new VideoCustomAdapter(application, MediaManager.getInstance().getVideoMedia());
 		setListAdapter(adapter);
 
 		MediaManager.getInstance().addObserver(this);
@@ -65,27 +65,21 @@ public class VideoFragment extends ListFragment implements Observer
 	 */
 
 	@Override
-	public void onListItemClick(ListView listView, View view, int position,
-			long id)
+	public void onListItemClick(ListView listView, View view, int position, long id)
 	{
-		ObjMediaInfo detailsVideo = (ObjMediaInfo) listView
-				.getItemAtPosition(position);
-		VideoFragment detailfrag = (VideoFragment) getFragmentManager()
-				.findFragmentByTag("Video");
+		ObjMediaInfo detailsVideo = (ObjMediaInfo) listView.getItemAtPosition(position);
+		VideoFragment detailfrag = (VideoFragment) getFragmentManager().findFragmentByTag("Video");
 
 		if (detailfrag != null && detailfrag.isInLayout())
 		{
 			// mise à jour
-			GlobalMethods application = (GlobalMethods) getActivity()
-					.getApplicationContext();
+			GlobalMethods application = (GlobalMethods) getActivity().getApplicationContext();
 			application.setSelectedObjMediaInfo(detailsVideo);
 		} else
 		{
 			application.setSelectedObjMediaInfo(detailsVideo);
-			Intent intent = new Intent(getActivity().getApplicationContext(),
-					DisplayVideo.class);
-			String abTitle = MediaManager.getInstance().getVideoMedia()
-					.get(position).get_name();
+			Intent intent = new Intent(getActivity().getApplicationContext(), DisplayVideo.class);
+			String abTitle = MediaManager.getInstance().getVideoMedia().get(position).get_name();
 			// Add title in the next fragment actionbar
 			intent.putExtra("title", abTitle);
 			startActivity(intent);
@@ -105,8 +99,16 @@ public class VideoFragment extends ListFragment implements Observer
 		{
 			case R.id.refresh :
 				mRefresh = item;
-				MenuItemCompat.setActionView(mRefresh, R.layout.progressbar);
-				application.refreshOnline();
+				if (application.isOnline(getActivity().getApplicationContext()) == true)
+				{
+					MenuItemCompat.setActionView(mRefresh, R.layout.progressbar);
+					application.refreshOnline();
+				} else
+				{
+					Toast.makeText(application.getBaseContext(),
+							"Veuillez activer votre connexion internet", 3).show();
+				}
+
 				break;
 		}
 		return false;
