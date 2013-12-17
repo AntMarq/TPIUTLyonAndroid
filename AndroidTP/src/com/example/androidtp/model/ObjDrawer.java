@@ -1,35 +1,36 @@
 package com.example.androidtp.model;
 
-public class ObjDrawer 
+public class ObjDrawer
 {
 
+	private int icon;
+	private String title;
 
-private int icon;
-private String title;
-
-
-	public ObjDrawer() 
+	public ObjDrawer()
 	{
-	    super ();
+		super();
 	}
-	
-	public int getIcon() {
+
+	public int getIcon()
+	{
 		return icon;
 	}
-	public void setIcon(int icon) {
+	public void setIcon(int icon)
+	{
 		this.icon = icon;
 	}
-	public String getTitle() {
+	public String getTitle()
+	{
 		return title;
 	}
-	public void setTitle(String title) {
+	public void setTitle(String title)
+	{
 		this.title = title;
 	}
 	@Override
-	public String toString() {
+	public String toString()
+	{
 		return "ObjDrawer [icon=" + icon + ", title=" + title + "]";
 	}
-	
-	
-	
+
 }

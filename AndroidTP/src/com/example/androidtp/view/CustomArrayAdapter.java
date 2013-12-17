@@ -14,137 +14,134 @@ import com.example.androidtp.R;
 import com.example.androidtp.model.CategorieDrawer;
 import com.example.androidtp.model.ObjDrawer;
 
-
 public class CustomArrayAdapter extends BaseAdapter
 {
-/**
- * CustomAdapter for the navigation drawer
- */
+	/**
+	 * CustomAdapter for the navigation drawer
+	 */
 
-    private  Context mContext;
-    LayoutInflater inflater ;
-    ArrayList<Object> listObjDrawer;
-	private static final int 	 				 TYPE_ITEM = 0;
-	private static final int 	 				 TYPE_SEPARATOR = 1;
-	private static final int 	 			 	 TYPE_MAX_COUNT = 2;
+	private Context mContext;
+	LayoutInflater inflater;
+	ArrayList<Object> listObjDrawer;
+	private static final int TYPE_ITEM = 0;
+	private static final int TYPE_SEPARATOR = 1;
+	private static final int TYPE_MAX_COUNT = 2;
 	String tag = "CustomArrayAdapter";
 	ViewHolder holder = null;
-	
-	public CustomArrayAdapter(Context context, ArrayList<Object> objDrawer) 
+
+	public CustomArrayAdapter(Context context, ArrayList<Object> objDrawer)
 	{
 		inflater = LayoutInflater.from(context);
 		this.mContext = context;
 		this.listObjDrawer = objDrawer;
 	}
-	
-	 @Override
-     public int getItemViewType(int position)
-	 {
-		 if (listObjDrawer.get (position) instanceof ObjDrawer)
-		 {
-         return  TYPE_ITEM;
-		 }
-		 return TYPE_SEPARATOR;
-     }
-	 
-	
-	 
-	 @Override
-	    public int getViewTypeCount() 
-		{
-	        return TYPE_MAX_COUNT;
-	    }
 
 	@Override
-    public View getView(int position, View convertView, ViewGroup parent) 
-	{	
+	public int getItemViewType(int position)
+	{
+		if (listObjDrawer.get(position) instanceof ObjDrawer)
+		{
+			return TYPE_ITEM;
+		}
+		return TYPE_SEPARATOR;
+	}
+
+	@Override
+	public int getViewTypeCount()
+	{
+		return TYPE_MAX_COUNT;
+	}
+
+	@Override
+	public View getView(int position, View convertView, ViewGroup parent)
+	{
 		int type = getItemViewType(position);
 		if (convertView == null)
 		{
-				holder = new ViewHolder();
-				
-				switch(type)
-				{
-					case TYPE_ITEM:
-       
-						convertView = inflater.inflate(R.layout.select_item, null);
-						holder.titre = (TextView)convertView.findViewById (R.id.item_title);
-						holder.image = (ImageView)convertView.findViewById (R.id.item_icon);
-						break;
-					case TYPE_SEPARATOR:
-						convertView = inflater.inflate(R.layout.liste_fragment_categ, null);
-						holder.categDrawer = (TextView)convertView.findViewById (R.id.nomCateg);
-						break;	
-				}
-				convertView.setTag(holder);
-		}
-		else
+			holder = new ViewHolder();
+
+			switch (type)
+			{
+				case TYPE_ITEM :
+
+					convertView = inflater.inflate(R.layout.select_item, null);
+					holder.titre = (TextView) convertView
+							.findViewById(R.id.item_title);
+					holder.image = (ImageView) convertView
+							.findViewById(R.id.item_icon);
+					break;
+				case TYPE_SEPARATOR :
+					convertView = inflater.inflate(
+							R.layout.liste_fragment_categ, null);
+					holder.categDrawer = (TextView) convertView
+							.findViewById(R.id.nomCateg);
+					break;
+			}
+			convertView.setTag(holder);
+		} else
 		{
-			holder = (ViewHolder)convertView.getTag();
+			holder = (ViewHolder) convertView.getTag();
 		}
-				switch(type)
-				{
-					
-					case TYPE_ITEM:
-						
-						
-						holder.titre.setText((((ObjDrawer)listObjDrawer.get(position))).getTitle());
-						
-						if(holder.titre.getText().equals("Video"))
-						{
-							holder.image.setImageResource(R.drawable.movie);
-						}
-						else if (holder.titre.getText().equals("Son"))
-						{
-							holder.image.setImageResource(R.drawable.sound);
-						}
-						else if (holder.titre.getText().equals("Image"))
-						{
-							holder.image.setImageResource(R.drawable.picture);
-						}
-						else
-						{
-						holder.image.setImageResource(R.drawable.text);
-						}
-						
-				
-						break;	
-						
-					case TYPE_SEPARATOR:
-						holder.categDrawer.setText((((CategorieDrawer) listObjDrawer.get(position))).getCateg().toString());
-						break;	
-				}
-	
-				return convertView;
-	}
-	
-	 private class ViewHolder 
+		switch (type)
 		{
-			TextView 	categDrawer;
-			TextView	titre;
-			ImageView	image;
-			
+
+			case TYPE_ITEM :
+
+				holder.titre
+						.setText((((ObjDrawer) listObjDrawer.get(position)))
+								.getTitle());
+
+				if (holder.titre.getText().equals("Video"))
+				{
+					holder.image.setImageResource(R.drawable.movie);
+				} else if (holder.titre.getText().equals("Son"))
+				{
+					holder.image.setImageResource(R.drawable.sound);
+				} else if (holder.titre.getText().equals("Image"))
+				{
+					holder.image.setImageResource(R.drawable.picture);
+				} else
+				{
+					holder.image.setImageResource(R.drawable.text);
+				}
+
+				break;
+
+			case TYPE_SEPARATOR :
+				holder.categDrawer.setText((((CategorieDrawer) listObjDrawer
+						.get(position))).getCateg().toString());
+				break;
 		}
 
-	@Override
-	public int getCount ()
+		return convertView;
+	}
+
+	private class ViewHolder
 	{
-		return listObjDrawer.size ();
+		TextView categDrawer;
+		TextView titre;
+		ImageView image;
+
 	}
 
 	@Override
-	public Object getItem (int position)
+	public int getCount()
 	{
-
-		return listObjDrawer.get (position);
+		return listObjDrawer.size();
 	}
 
 	@Override
-	public long getItemId (int position)
+	public Object getItem(int position)
 	{
-		
+
+		return listObjDrawer.get(position);
+	}
+
+	@Override
+	public long getItemId(int position)
+	{
+
 		return position;
 	}
 
-	
 }

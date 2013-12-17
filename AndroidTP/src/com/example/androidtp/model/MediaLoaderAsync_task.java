@@ -19,41 +19,48 @@ import org.xmlpull.v1.XmlPullParserFactory;
 import android.os.AsyncTask;
 import android.util.Log;
 
-public class MediaLoaderAsync_task extends AsyncTask<String, Integer, String> {
+public class MediaLoaderAsync_task extends AsyncTask<String, Integer, String>
+{
 
 	private String tag = "MediaLoaderAsync_task";
 	ObjMediaInfo newMediaObj = null;
 
-	public MediaLoaderAsync_task() 
+	public MediaLoaderAsync_task()
 	{
-		super();	
+		super();
 	}
 
 	@Override
-	protected void onPreExecute() {
+	protected void onPreExecute()
+	{
 
 	};
 
 	@Override
-	protected void onProgressUpdate(Integer... progress) {
+	protected void onProgressUpdate(Integer... progress)
+	{
 
 	}
 
 	@Override
-	protected String doInBackground(String... params) {
+	protected String doInBackground(String... params)
+	{
 		String sResponse;
 		StringBuilder sb = new StringBuilder();
 
-		try {
+		try
+		{
 			int count = 0;
 			URL url = new URL(params[0]);
 			HttpURLConnection conection = (HttpURLConnection) url
 					.openConnection();
 			conection.connect();
-			if (conection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+			if (conection.getResponseCode() == HttpURLConnection.HTTP_OK)
+			{
 				BufferedReader in = new BufferedReader(new InputStreamReader(
 						conection.getInputStream()));
-				while ((sResponse = in.readLine()) != null) {
+				while ((sResponse = in.readLine()) != null)
+				{
 					sb = sb.append(sResponse);
 				}
 				return sb.toString();
@@ -69,7 +76,8 @@ public class MediaLoaderAsync_task extends AsyncTask<String, Integer, String> {
 			OutputStream output = new FileOutputStream(params[1] + params[2]);
 			byte data[] = new byte[1024];
 			long total = 0;
-			while ((count = input.read(data)) != -1) {
+			while ((count = input.read(data)) != -1)
+			{
 				total += count;
 				output.write(data, 0, count);
 			}
@@ -80,7 +88,8 @@ public class MediaLoaderAsync_task extends AsyncTask<String, Integer, String> {
 
 			input.close();
 
-		} catch (Exception e) {
+		} catch (Exception e)
+		{
 			// TODO faire une gestion d'erreur
 			Log.e("MediaLoaderAsync_task", e.getMessage());
 		}
@@ -89,10 +98,13 @@ public class MediaLoaderAsync_task extends AsyncTask<String, Integer, String> {
 	}
 
 	@Override
-	protected void onPostExecute(String result) {
-		if (result != null) {
+	protected void onPostExecute(String result)
+	{
+		if (result != null)
+		{
 
-			try {
+			try
+			{
 				XmlPullParserFactory factory = XmlPullParserFactory
 						.newInstance();
 				factory.setNamespaceAware(true);
@@ -101,99 +113,114 @@ public class MediaLoaderAsync_task extends AsyncTask<String, Integer, String> {
 
 				int eventType = xpp.getEventType();
 
-				while (eventType != XmlPullParser.END_DOCUMENT) {
+				while (eventType != XmlPullParser.END_DOCUMENT)
+				{
 
 					String name = null;
-					switch (eventType) {
-					case XmlPullParser.START_DOCUMENT:
-						break;
-					case XmlPullParser.START_TAG:
-						name = xpp.getName();
+					switch (eventType)
+					{
+						case XmlPullParser.START_DOCUMENT :
+							break;
+						case XmlPullParser.START_TAG :
+							name = xpp.getName();
 
-						if (name.equalsIgnoreCase("media")) {
-							newMediaObj = new ObjMediaInfo();
-							newMediaObj.set_name(xpp.getAttributeValue(null,
-									"name"));
-							newMediaObj.set_type(xpp.getAttributeValue(null,
-									"type"));
-							newMediaObj.set_url(xpp.getAttributeValue(null,
-									"path"));
-							newMediaObj.set_version(xpp.getAttributeValue(null,
-									"versionCode"));
+							if (name.equalsIgnoreCase("media"))
+							{
+								newMediaObj = new ObjMediaInfo();
+								newMediaObj.set_name(xpp.getAttributeValue(
+										null, "name"));
+								newMediaObj.set_type(xpp.getAttributeValue(
+										null, "type"));
+								newMediaObj.set_url(xpp.getAttributeValue(null,
+										"path"));
+								newMediaObj.set_version(xpp.getAttributeValue(
+										null, "versionCode"));
 
-							/*
-							 * Log.v(tag, "name" + newMediaObj.get_name() +" "+
-							 * "type" + newMediaObj.get_type() +" "+ "path" +
-							 * newMediaObj.get_url() +" "+ "versionCode" +
-							 * newMediaObj.get_version());
-							 */
-						}
-
-						break;
-					case XmlPullParser.END_TAG:
-
-						name = xpp.getName();
-
-						if (name.equalsIgnoreCase("media")
-								&& newMediaObj != null) {
-							/*
-							 * MediaManager.getInstance().getListMedia().add(
-							 * newMediaObj); Log.v(tag, "listMedia" +
-							 * MediaManager
-							 * .getInstance().getListMedia().size());
-							 */
-
-							if (newMediaObj.get_type()
-									.equalsIgnoreCase("video")) {
-								if (MediaManager.getInstance()
-										.videoArrayContainMediaObject(
-												newMediaObj) == false)
-									MediaManager.getInstance().getVideoMedia()
-											.add(newMediaObj);
-							} else if (newMediaObj.get_type().equalsIgnoreCase(
-									"audio")) {
-								if (MediaManager
-										.getInstance()
-										.sonArrayContainMediaObject(newMediaObj) == false)
-									MediaManager.getInstance().getAudioMedia()
-											.add(newMediaObj);
-							} else if (newMediaObj.get_type().equalsIgnoreCase(
-									"image")) {
-								if (MediaManager.getInstance()
-										.imageArrayContainMediaObject(
-												newMediaObj) == false)
-									MediaManager.getInstance()
-											.getPictureMedia().add(newMediaObj);
-							} else {
-								if (MediaManager.getInstance()
-										.textArrayContainMediaObject(
-												newMediaObj) == false)
-									MediaManager.getInstance().getTexteMedia()
-											.add(newMediaObj);
-
-								String textpath = newMediaObj.get_url();
-								String namefile = newMediaObj.get_name();
-
-								new GetTextFile().execute(textpath, namefile);
-
+								/*
+								 * Log.v(tag, "name" + newMediaObj.get_name()
+								 * +" "+ "type" + newMediaObj.get_type() +" "+
+								 * "path" + newMediaObj.get_url() +" "+
+								 * "versionCode" + newMediaObj.get_version());
+								 */
 							}
-						}
+
+							break;
+						case XmlPullParser.END_TAG :
+
+							name = xpp.getName();
+
+							if (name.equalsIgnoreCase("media")
+									&& newMediaObj != null)
+							{
+								/*
+								 * MediaManager.getInstance().getListMedia().add(
+								 * newMediaObj); Log.v(tag, "listMedia" +
+								 * MediaManager
+								 * .getInstance().getListMedia().size());
+								 */
+
+								if (newMediaObj.get_type().equalsIgnoreCase(
+										"video"))
+								{
+									if (MediaManager.getInstance()
+											.videoArrayContainMediaObject(
+													newMediaObj) == false)
+										MediaManager.getInstance()
+												.getVideoMedia()
+												.add(newMediaObj);
+								} else if (newMediaObj.get_type()
+										.equalsIgnoreCase("audio"))
+								{
+									if (MediaManager.getInstance()
+											.sonArrayContainMediaObject(
+													newMediaObj) == false)
+										MediaManager.getInstance()
+												.getAudioMedia()
+												.add(newMediaObj);
+								} else if (newMediaObj.get_type()
+										.equalsIgnoreCase("image"))
+								{
+									if (MediaManager.getInstance()
+											.imageArrayContainMediaObject(
+													newMediaObj) == false)
+										MediaManager.getInstance()
+												.getPictureMedia()
+												.add(newMediaObj);
+								} else
+								{
+									if (MediaManager.getInstance()
+											.textArrayContainMediaObject(
+													newMediaObj) == false)
+										MediaManager.getInstance()
+												.getTexteMedia()
+												.add(newMediaObj);
+
+									String textpath = newMediaObj.get_url();
+									String namefile = newMediaObj.get_name();
+
+									new GetTextFile().execute(textpath,
+											namefile);
+
+								}
+							}
 					}
 					eventType = xpp.next();
 				}
-				// reussite du chargement;
-
 				MediaManager.getInstance().triggerObservers();
 
-				// fin du traitement du xml
-
-			} catch (XmlPullParserException e) {
+				/**
+				 * Parse XML finish
+				 */
+			} catch (XmlPullParserException e)
+			{
 				e.printStackTrace();
-			} catch (IOException e) {
+			} catch (IOException e)
+			{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		} else {
+		} else
+		{
 			Log.e(tag,
 					"Une erreur est survenue pendant la recuperation du flux RSS");
 		}
@@ -203,28 +230,32 @@ public class MediaLoaderAsync_task extends AsyncTask<String, Integer, String> {
 	 * Classe de chargement du fichier text Necessaire de parser le xml afin
 	 * d'acquérir le path de l'url pour le dl du fichier text
 	 */
-	private class GetTextFile extends AsyncTask<String, Integer, String> {
+	private class GetTextFile extends AsyncTask<String, Integer, String>
+	{
 		private String ObjName;
 
 		@Override
-		protected String doInBackground(String... params) {
+		protected String doInBackground(String... params)
+		{
 			ObjName = params[1];
 			int count;
 			String sResponse;
 			StringBuilder sb = new StringBuilder();
-			try {
+			try
+			{
 
 				URL url2 = new URL(MediaManager.getInstance().getBaseUrl()
 						+ params[0]);
-				// Log.v(tag, "test url = " + url2);
 				HttpURLConnection conexion2 = (HttpURLConnection) url2
 						.openConnection();
-
 				conexion2.connect();
-				if (conexion2.getResponseCode() == HttpURLConnection.HTTP_OK) {
+
+				if (conexion2.getResponseCode() == HttpURLConnection.HTTP_OK)
+				{
 					BufferedReader in = new BufferedReader(
 							new InputStreamReader(conexion2.getInputStream()));
-					while ((sResponse = in.readLine()) != null) {
+					while ((sResponse = in.readLine()) != null)
+					{
 						sb = sb.append(sResponse);
 					}
 					return sb.toString();
@@ -232,7 +263,8 @@ public class MediaLoaderAsync_task extends AsyncTask<String, Integer, String> {
 				InputStream is = url2.openStream();
 				File testDirectory = new File(MediaManager.getInstance()
 						.getDirectorypath());
-				if (!testDirectory.exists()) {
+				if (!testDirectory.exists())
+				{
 					testDirectory.mkdir();
 				}
 				FileOutputStream fos = new FileOutputStream(testDirectory + "/"
@@ -240,13 +272,15 @@ public class MediaLoaderAsync_task extends AsyncTask<String, Integer, String> {
 				byte data[] = new byte[1024];
 				long total = 0;
 
-				while ((count = is.read(data)) != -1) {
+				while ((count = is.read(data)) != -1)
+				{
 					total += count;
 					fos.write(data, 0, count);
 				}
 				is.close();
 				fos.close();
-			} catch (Exception e) {
+			} catch (Exception e)
+			{
 				Log.e("ERROR DOWNLOADING",
 						"Unable to download" + e.getMessage());
 			}
@@ -254,14 +288,19 @@ public class MediaLoaderAsync_task extends AsyncTask<String, Integer, String> {
 		}
 
 		@Override
-		protected void onPostExecute(String result) {
+		protected void onPostExecute(String result)
+		{
 			Log.v(tag, "onPostExecute" + result);
-			if (result != null) {
+			if (result != null)
+			{
 				Log.v(tag, "result parse TextFile" + result);
 				Log.v(tag, "test object" + newMediaObj.get_name());
 
-				for (ObjMediaInfo obj : MediaManager.getInstance().getTexteMedia()) {
-					if (obj.get_name().equals(ObjName)) {
+				for (ObjMediaInfo obj : MediaManager.getInstance()
+						.getTexteMedia())
+				{
+					if (obj.get_name().equals(ObjName))
+					{
 						obj.set_content(result);
 					}
 

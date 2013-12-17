@@ -21,117 +21,123 @@ import com.nostra13.universalimageloader.core.assist.ImageLoadingListener;
 
 public class ImageCustomAdapter extends BaseAdapter
 {
-	private Context 			 mContext;
-	private ArrayList<ObjMediaInfo> newPictureList ;
-	private LayoutInflater 		 inflater;
+	private Context mContext;
+	private ArrayList<ObjMediaInfo> newPictureList;
+	private LayoutInflater inflater;
 	private ImageLoader imageLoader = ImageLoader.getInstance();
-	
-	public ImageCustomAdapter(Context context,ArrayList<ObjMediaInfo> arrayList) 
-	{		
+
+	public ImageCustomAdapter(Context context, ArrayList<ObjMediaInfo> arrayList)
+	{
 		mContext = context;
 		inflater = LayoutInflater.from(context);
-		this.newPictureList = arrayList ;
+		this.newPictureList = arrayList;
 	}
 
 	@Override
-	public int getCount() {
+	public int getCount()
+	{
 		// TODO Auto-generated method stub
 		return newPictureList.size();
 	}
 
 	@Override
-	public Object getItem(int position) {
-		return newPictureList.get (position);
+	public Object getItem(int position)
+	{
+		return newPictureList.get(position);
 	}
 
 	@Override
-	public long getItemId(int position) {
+	public long getItemId(int position)
+	{
 		// TODO Auto-generated method stub
 		return position;
 	}
 
 	@Override
-	public View getView (int position, View convertView, ViewGroup parent)
+	public View getView(int position, View convertView, ViewGroup parent)
 	{
 		ViewHolder holder = null;
-			
+
 		if (convertView == null)
 		{
-				holder = new ViewHolder();
-				
-				convertView = inflater.inflate(R.layout.image_cell, null);
-				
-				holder.titlePicture = (TextView)convertView.findViewById (R.id.titre);
-				holder.imagePicture = (ImageView)convertView.findViewById (R.id.image);
-				holder.pathPicture = (TextView)convertView.findViewById (R.id.textpath);
-				convertView.setTag(holder);
-	}						
-	else 
-	{
-		holder = (ViewHolder)convertView.getTag();				
-	}
-		
-		final ObjMediaInfo objMedia = ((ObjMediaInfo)(newPictureList.get(position)));
-		holder.titlePicture.setText (objMedia.get_name());
+			holder = new ViewHolder();
+
+			convertView = inflater.inflate(R.layout.image_cell, null);
+
+			holder.titlePicture = (TextView) convertView
+					.findViewById(R.id.titre);
+			holder.imagePicture = (ImageView) convertView
+					.findViewById(R.id.image);
+			holder.pathPicture = (TextView) convertView
+					.findViewById(R.id.textpath);
+			convertView.setTag(holder);
+		} else
+		{
+			holder = (ViewHolder) convertView.getTag();
+		}
+
+		final ObjMediaInfo objMedia = ((ObjMediaInfo) (newPictureList
+				.get(position)));
+		holder.titlePicture.setText(objMedia.get_name());
 		holder.imagePicture.setImageBitmap(objMedia.get_imageView());
 		holder.pathPicture.setText((objMedia.get_url()));
-		
-		 final ViewHolder finalHolder = holder;
-         if (objMedia.get_url() != null)
-         {
-                 
-                 DisplayImageOptions options = new DisplayImageOptions.Builder()
-                 .cacheInMemory(true) // default
-		         .cacheOnDisc(true)
-		         .build();
-                 
-                 imageLoader.displayImage(MediaManager.getInstance().getBaseUrl() + objMedia.get_url(), holder.imagePicture,options,new ImageLoadingListener() 
-                 {
-                     @Override
-                     public void onLoadingStarted(String imageUri, View view) 
-                     {
-                        
-                     }
-                     @Override
-                     public void onLoadingFailed(String imageUri, View view, FailReason failReason) 
-                     {
-                    	 finalHolder.imagePicture.setImageResource(R.drawable.picture);
 
-                     }
-                     @Override
-                     public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) 
-                     {
-                             
-                     }
-                     @Override
-                     public void onLoadingCancelled(String imageUri, View view) 
-                     {
-                         
-                     }
-                 
-                 });
-         }
-         else if(objMedia.get_imageView()!=null)
-         {
-                 
-                 holder.imagePicture.setImageBitmap (objMedia.get_imageView());
-         }
-         else
-         {
-                 holder.imagePicture.setImageResource(R.drawable.picture);
-         }
-		
+		final ViewHolder finalHolder = holder;
+		if (objMedia.get_url() != null)
+		{
 
-		
-	return convertView;			
-}
-	
+			DisplayImageOptions options = new DisplayImageOptions.Builder()
+					.cacheInMemory(true) // default
+					.cacheOnDisc(true).build();
 
-	private class ViewHolder 
+			imageLoader.displayImage(MediaManager.getInstance().getBaseUrl()
+					+ objMedia.get_url(), holder.imagePicture, options,
+					new ImageLoadingListener()
+					{
+						@Override
+						public void onLoadingStarted(String imageUri, View view)
+						{
+
+						}
+						@Override
+						public void onLoadingFailed(String imageUri, View view,
+								FailReason failReason)
+						{
+							finalHolder.imagePicture
+									.setImageResource(R.drawable.picture);
+
+						}
+						@Override
+						public void onLoadingComplete(String imageUri,
+								View view, Bitmap loadedImage)
+						{
+
+						}
+						@Override
+						public void onLoadingCancelled(String imageUri,
+								View view)
+						{
+
+						}
+
+					});
+		} else if (objMedia.get_imageView() != null)
+		{
+
+			holder.imagePicture.setImageBitmap(objMedia.get_imageView());
+		} else
+		{
+			holder.imagePicture.setImageResource(R.drawable.picture);
+		}
+
+		return convertView;
+	}
+
+	private class ViewHolder
 	{
-		TextView 	titlePicture;
-		TextView 	pathPicture;
-		ImageView	imagePicture;
-				
+		TextView titlePicture;
+		TextView pathPicture;
+		ImageView imagePicture;
+
 	}
 }
