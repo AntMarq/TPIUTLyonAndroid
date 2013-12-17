@@ -28,7 +28,9 @@ public class ArrayDrawerData extends ArrayList<Object>
 		
 	}
 
-//Organize Category and Item for the navigation drawer
+/**
+ * Organize Category and Item for the navigation drawer
+ */
 	public void loadDrawer ()
 	{			
 		menuTitles = this.context.getResources().getStringArray(R.array.actu_array);
@@ -36,13 +38,17 @@ public class ArrayDrawerData extends ArrayList<Object>
 		
 		for(int i = 0; i < menuCateg.length; i++ )
 		{
-//First Category
+/**
+ * First Category
+ */
 			if(i==0)
 			{
 				CategorieDrawer newCateg	= new CategorieDrawer();
 				newCateg.setCateg(menuCateg[i]);
 				this.add(newCateg);	
-//Item for first category
+/**
+ * Item for first category
+ */
 				for(int j = 0; j < menuTitles.length; j++)
 				{
 					ObjDrawer newObjDrawer = new ObjDrawer();										
