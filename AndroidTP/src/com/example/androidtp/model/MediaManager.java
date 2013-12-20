@@ -15,10 +15,9 @@ public class MediaManager extends Observable
 	 * Singleton
 	 */
 
-	private final String FILENAME = "Medias.xml";
+	private final String FILENAME = "medias.xml";
 	private final String URL = "http://lionel.banand.free.fr/lp_iem/updaterLPIEM.php?type=medias&serial=AAA";
-	private final String DirectoryPath = Environment
-			.getExternalStorageDirectory() + "/media/";
+	private final String DirectoryPath = Environment.getExternalStorageDirectory() + "/media/androidapp/";
 	private final String BaseUrl = "http://lionel.banand.free.fr/lp_iem";
 	private final long serialVersionUID = 1L;
 
@@ -28,9 +27,7 @@ public class MediaManager extends Observable
 	private ArrayList<ObjMediaInfo> pictureMedia;
 	private ArrayList<ObjMediaInfo> texteMedia;
 	private ObjMediaInfo selectedObjMediaInfo;
-	private MediaLoaderAsync_task mediaLoader ;
-	
-
+	private MediaLoaderAsync_task mediaLoader;
 
 	private MediaManager()
 	{
@@ -41,7 +38,7 @@ public class MediaManager extends Observable
 		texteMedia = new ArrayList<ObjMediaInfo>();
 		mediaLoader = new MediaLoaderAsync_task();
 		mediaLoader.execute(URL, DirectoryPath, FILENAME);
-		
+
 	}
 
 	public static MediaManager getInstance()
@@ -185,5 +182,9 @@ public class MediaManager extends Observable
 		return BaseUrl;
 	}
 
-	
+	public String getFILENAME()
+	{
+		return FILENAME;
+	}
+
 }

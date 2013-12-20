@@ -63,7 +63,20 @@ public class GlobalMethods extends Application
 		if (this.isOnline(this.getBaseContext()) == true)
 		{
 			Log.v(tag, "isOnline");
-			new MediaLoaderAsync_task().execute(MediaManager.getInstance().getURL(), null, null);
+			
+			File dir = new File(MediaManager.getInstance().getDirectorypath()) ;
+			Log.v(tag, "before delete file");
+			if (dir.isDirectory() && dir.list().length != 0)
+			{
+				Log.v(tag, "delete file" + dir.list().length);
+				String[] children = dir.list();
+		        for (int i = 0; i < children.length; i++) 
+		        {
+		            new File(dir, children[i]).delete();
+		        }
+			}
+	
+			new MediaLoaderAsync_task().execute(MediaManager.getInstance().getURL(), MediaManager.getInstance().getDirectorypath(), MediaManager.getInstance().getFILENAME());
 		} else
 		{
 			Toast.makeText(this.getBaseContext(), "Réseau non disponible, veuillez vérifier votre connexion internet",
@@ -80,12 +93,12 @@ public class GlobalMethods extends Application
 	 */
 	public static boolean ManageDirectory(String path)
 	{
+
 		if (path == null)
 			return false;
 		File file = new File(path);
 		if (file.exists() && file.isDirectory())
-		{
-			
+		{			
 			return true;
 		} else
 			return file.mkdir();

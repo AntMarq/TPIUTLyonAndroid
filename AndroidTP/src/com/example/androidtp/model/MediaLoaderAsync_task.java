@@ -1,13 +1,11 @@
 package com.example.androidtp.model;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.StringReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -16,10 +14,7 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 
-import com.example.androidtp.GlobalMethods;
-
 import android.os.AsyncTask;
-import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
@@ -33,7 +28,7 @@ public class MediaLoaderAsync_task extends AsyncTask<String, Integer, String>
 	{
 		super();
 	}
-	
+
 	@Override
 	protected void onPreExecute()
 	{
@@ -49,14 +44,37 @@ public class MediaLoaderAsync_task extends AsyncTask<String, Integer, String>
 	@Override
 	protected String doInBackground(String... params)
 	{
+		Log.v(tag, "doInBackground Principale");
 		String sResponse;
 		StringBuilder sb = new StringBuilder();
 
 		try
 		{
+			/**
+			 * If folder Media contains file, delete files when the application
+			 * is update
+			 */
+
 			int count = 0;
 			URL url = new URL(params[0]);
+			/**
+			 * Download file media.xml in folder Media
+			 */
+			InputStream is = url.openStream();
+			FileOutputStream fos = new FileOutputStream(params[1] + params[2]);
+			byte data[] = new byte[1024];
+			long total = 0;
+
+			while ((count = is.read(data)) != -1)
+			{
+				total += count;
+				fos.write(data, 0, count);
+			}
+			is.close();
+			fos.close();
+
 			HttpURLConnection conection = (HttpURLConnection) url.openConnection();
+			Log.v(tag, "conection" + conection.getResponseCode());
 			conection.connect();
 			if (conection.getResponseCode() == HttpURLConnection.HTTP_OK)
 			{
@@ -68,29 +86,8 @@ public class MediaLoaderAsync_task extends AsyncTask<String, Integer, String>
 				return sb.toString();
 			}
 
-			// getting file length
-			// int lenghtOfFile = conection.getContentLength();
-
-			// input stream to read file - with 8k buffer
-			InputStream input = new BufferedInputStream(url.openStream(), 8192);
-
-			// Output stream to write file
-			OutputStream output = new FileOutputStream(params[1] + params[2]);
-			byte data[] = new byte[1024];
-			long total = 0;
-			while ((count = input.read(data)) != -1)
-			{
-				total += count;
-				output.write(data, 0, count);
-			}
-			// flushing output
-			output.flush();
-			// closing streams
-			output.close();
-
-			input.close();
-
-		} catch (Exception e)
+		}
+		catch (Exception e)
 		{
 			// TODO faire une gestion d'erreur
 			Log.e("MediaLoaderAsync_task", e.getMessage());
@@ -102,7 +99,8 @@ public class MediaLoaderAsync_task extends AsyncTask<String, Integer, String>
 	@Override
 	protected void onPostExecute(String result)
 	{
-		Message msg = new Message ();
+		Log.v(tag, "onPostExecute" + result);
+		Message msg = new Message();
 		if (result != null)
 		{
 
@@ -122,6 +120,7 @@ public class MediaLoaderAsync_task extends AsyncTask<String, Integer, String>
 					switch (eventType)
 					{
 						case XmlPullParser.START_DOCUMENT :
+							Log.v(tag, "eventType = " + eventType);
 							break;
 						case XmlPullParser.START_TAG :
 							name = xpp.getName();
@@ -142,21 +141,24 @@ public class MediaLoaderAsync_task extends AsyncTask<String, Integer, String>
 							name = xpp.getName();
 
 							if (name.equalsIgnoreCase("media") && newMediaObj != null)
-							{								
+							{
 
 								if (newMediaObj.get_type().equalsIgnoreCase("video"))
 								{
 									if (MediaManager.getInstance().videoArrayContainMediaObject(newMediaObj) == false)
 										MediaManager.getInstance().getVideoMedia().add(newMediaObj);
-								} else if (newMediaObj.get_type().equalsIgnoreCase("audio"))
+								}
+								else if (newMediaObj.get_type().equalsIgnoreCase("audio"))
 								{
 									if (MediaManager.getInstance().sonArrayContainMediaObject(newMediaObj) == false)
 										MediaManager.getInstance().getAudioMedia().add(newMediaObj);
-								} else if (newMediaObj.get_type().equalsIgnoreCase("image"))
+								}
+								else if (newMediaObj.get_type().equalsIgnoreCase("image"))
 								{
 									if (MediaManager.getInstance().imageArrayContainMediaObject(newMediaObj) == false)
 										MediaManager.getInstance().getPictureMedia().add(newMediaObj);
-								} else
+								}
+								else
 								{
 									if (MediaManager.getInstance().textArrayContainMediaObject(newMediaObj) == false)
 										MediaManager.getInstance().getTexteMedia().add(newMediaObj);
@@ -176,19 +178,22 @@ public class MediaLoaderAsync_task extends AsyncTask<String, Integer, String>
 				/**
 				 * Parse XML finish
 				 */
-			} catch (XmlPullParserException e)
+			}
+			catch (XmlPullParserException e)
 			{
 				e.printStackTrace();
-			} catch (IOException e)
+			}
+			catch (IOException e)
 			{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		} else
+		}
+		else
 		{
 
 			Log.e(tag, "Une erreur est survenue pendant la recuperation du flux RSS");
-			
+
 		}
 
 	}
@@ -212,6 +217,21 @@ public class MediaLoaderAsync_task extends AsyncTask<String, Integer, String>
 			{
 
 				URL url2 = new URL(MediaManager.getInstance().getBaseUrl() + params[0]);
+
+				InputStream is = url2.openStream();
+				File testDirectory = new File(MediaManager.getInstance().getDirectorypath());
+				FileOutputStream fos = new FileOutputStream(testDirectory + "/" + params[1] + ".txt");
+				byte data[] = new byte[1024];
+				long total = 0;
+
+				while ((count = is.read(data)) != -1)
+				{
+					total += count;
+					fos.write(data, 0, count);
+				}
+				is.close();
+				fos.close();
+
 				HttpURLConnection conexion2 = (HttpURLConnection) url2.openConnection();
 				conexion2.connect();
 
@@ -224,24 +244,8 @@ public class MediaLoaderAsync_task extends AsyncTask<String, Integer, String>
 					}
 					return sb.toString();
 				}
-				InputStream is = url2.openStream();
-				File testDirectory = new File(MediaManager.getInstance().getDirectorypath());
-				if (!testDirectory.exists())
-				{
-					testDirectory.mkdir();
-				}
-				FileOutputStream fos = new FileOutputStream(testDirectory + "/" + params[1] + ".txt");
-				byte data[] = new byte[1024];
-				long total = 0;
-
-				while ((count = is.read(data)) != -1)
-				{
-					total += count;
-					fos.write(data, 0, count);
-				}
-				is.close();
-				fos.close();
-			} catch (Exception e)
+			}
+			catch (Exception e)
 			{
 				Log.e("ERROR DOWNLOADING", "Unable to download" + e.getMessage());
 			}
@@ -251,13 +255,8 @@ public class MediaLoaderAsync_task extends AsyncTask<String, Integer, String>
 		@Override
 		protected void onPostExecute(String result)
 		{
-			Log.v(tag, "onPostExecute" + result);
-
 			if (result != null)
 			{
-				Log.v(tag, "result parse TextFile" + result);
-				Log.v(tag, "test object" + newMediaObj.get_name());
-
 				for (ObjMediaInfo obj : MediaManager.getInstance().getTexteMedia())
 				{
 					if (obj.get_name().equals(ObjName))

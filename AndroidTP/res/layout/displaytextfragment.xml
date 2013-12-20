@@ -9,7 +9,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:src="@drawable/text" />
+        android:src="@drawable/text_file" />
 
     <TextView
         android:id="@+id/path"

@@ -63,17 +63,16 @@ public class VideoCustomAdapter extends BaseAdapter
 			convertView = inflater.inflate(R.layout.video_cell, null);
 
 			holder.titleVideo = (TextView) convertView.findViewById(R.id.titre);
-			holder.imageVideo = (ImageView) convertView
-					.findViewById(R.id.image);
-			holder.pathVideo = (TextView) convertView
-					.findViewById(R.id.textpath);
+			holder.imageVideo = (ImageView) convertView.findViewById(R.id.image);
+			holder.pathVideo = (TextView) convertView.findViewById(R.id.textpath);
 			convertView.setTag(holder);
-		} else
+		}
+		else
 		{
 			holder = (ViewHolder) convertView.getTag();
 		}
 
-		final ObjMediaInfo objMedia = ((ObjMediaInfo) (newList.get(position)));
+		final ObjMediaInfo objMedia = ((ObjMediaInfo) newList.get(position));
 
 		holder.titleVideo.setText(objMedia.get_name());
 		holder.imageVideo.setImageResource(R.drawable.video_player);

@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:adjustViewBounds="true"
+        android:clickable="true"
         android:maxHeight="70dp"
         android:maxWidth="70dp"
         android:paddingBottom="5dp"

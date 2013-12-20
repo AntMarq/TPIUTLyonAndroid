@@ -32,6 +32,8 @@
         </activity>
         <activity android:name="DisplayVideo"></activity>
         <activity android:name="DisplayText"></activity>
+        <activity android:name="DisplaySon"></activity>
+        <activity android:name="DisplayImage"></activity>
         
          <service android:name="com.example.androidtp.DMService" />
         
@@ -40,6 +42,7 @@
             <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
         </intent-filter>
     </receiver>
+     
 
 </application>
 </manifest>

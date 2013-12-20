@@ -64,7 +64,7 @@ public class TextCustomAdapter extends BaseAdapter
 			holder.titleText = (TextView) convertView.findViewById(R.id.titre);
 			holder.imageText = (ImageView) convertView.findViewById(R.id.image);
 			holder.pathText = (TextView) convertView.findViewById(R.id.textpath);
-			holder.content = (TextView) convertView.findViewById(R.id.contenttext);
+		
 			convertView.setTag(holder);
 		} else
 		{
@@ -73,7 +73,7 @@ public class TextCustomAdapter extends BaseAdapter
 
 		final ObjMediaInfo objMedia = ((ObjMediaInfo) (newtTexList.get(position)));
 		holder.titleText.setText(objMedia.get_name());
-		holder.imageText.setImageResource(R.drawable.text);
+		holder.imageText.setImageResource(R.drawable.text_file);
 		holder.pathText.setText(objMedia.get_url());
 
 		return convertView;
@@ -84,7 +84,7 @@ public class TextCustomAdapter extends BaseAdapter
 		TextView titleText;
 		TextView pathText;
 		ImageView imageText;
-		TextView content;
+	
 	}
 
 }

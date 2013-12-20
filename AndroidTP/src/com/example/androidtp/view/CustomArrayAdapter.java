@@ -64,7 +64,7 @@ public class CustomArrayAdapter extends BaseAdapter
 			{
 				case TYPE_ITEM :
 
-					convertView = inflater.inflate(R.layout.select_item, null);
+					convertView = inflater.inflate(R.layout.drawer_select_item, null);
 					holder.titre = (TextView) convertView.findViewById(R.id.item_title);
 					holder.image = (ImageView) convertView.findViewById(R.id.item_icon);
 					break;

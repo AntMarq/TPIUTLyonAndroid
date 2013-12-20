@@ -1,0 +1,49 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <TextView
+        android:id="@+id/titre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/imageSon"
+        android:layout_marginLeft="27dp"
+        android:layout_toRightOf="@+id/imageSon"
+        android:layout_centerHorizontal="true"
+        android:textSize="14dp"
+        android:text="TextView" />
+
+    <ImageView
+        android:id="@+id/imageSon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/contentson"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="36dp"
+        android:clickable="false"
+        android:src="@drawable/sound" 
+        />
+
+    <TextView
+        android:id="@+id/contentson"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/imageSon"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="14dp"
+        android:text="TextView"
+        android:textSize="16dp"
+        android:textStyle="italic" />
+
+    <TextView
+        android:id="@+id/path"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/imageSon"
+        android:layout_below="@+id/imageSon"
+        android:layout_marginTop="24dp"
+         android:textSize="10dp"
+        android:text="TextView" />
+
+</RelativeLayout>

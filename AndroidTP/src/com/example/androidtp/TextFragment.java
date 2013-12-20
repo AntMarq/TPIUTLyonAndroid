@@ -29,17 +29,13 @@ public class TextFragment extends ListFragment implements Observer
 	private MenuItem mRefresh = null;
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState)
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
 		setHasOptionsMenu(true);
 
-		View view = inflater.inflate(
-				getResources().getLayout(R.layout.textfragment_layout),
-				container, false);
+		View view = inflater.inflate(getResources().getLayout(R.layout.textfragment_layout), container, false);
 
-		textCustomAdapter = new TextCustomAdapter(getActivity()
-				.getApplicationContext(), MediaManager.getInstance()
+		textCustomAdapter = new TextCustomAdapter(getActivity().getApplicationContext(), MediaManager.getInstance()
 				.getTexteMedia());
 		setListAdapter(textCustomAdapter);
 
@@ -70,27 +66,22 @@ public class TextFragment extends ListFragment implements Observer
 	 */
 
 	@Override
-	public void onListItemClick(ListView listView, View view, int position,
-			long id)
+	public void onListItemClick(ListView listView, View view, int position, long id)
 	{
-		ObjMediaInfo detailsText = (ObjMediaInfo) listView
-				.getItemAtPosition(position);
-		TextFragment detailfrag = (TextFragment) getFragmentManager()
-				.findFragmentByTag("Texte");
+		ObjMediaInfo detailsText = (ObjMediaInfo) listView.getItemAtPosition(position);
+		TextFragment detailfrag = (TextFragment) getFragmentManager().findFragmentByTag("Texte");
 
 		if (detailfrag != null && detailfrag.isInLayout())
 		{
 			// mise à jour
-			GlobalMethods application = (GlobalMethods) getActivity()
-					.getApplicationContext();
+			GlobalMethods application = (GlobalMethods) getActivity().getApplicationContext();
 			application.setSelectedObjMediaInfo(detailsText);
-		} else
+		}
+		else
 		{
 			application.setSelectedObjMediaInfo(detailsText);
-			Intent intent = new Intent(getActivity().getApplicationContext(),
-					DisplayText.class);
-			String abTitle = MediaManager.getInstance().getTexteMedia()
-					.get(position).get_name();
+			Intent intent = new Intent(getActivity().getApplicationContext(), DisplayText.class);
+			String abTitle = MediaManager.getInstance().getTexteMedia().get(position).get_name();
 			/**
 			 * Add title in the next fragment actionbar
 			 */
@@ -116,10 +107,10 @@ public class TextFragment extends ListFragment implements Observer
 				{
 					MenuItemCompat.setActionView(mRefresh, R.layout.progressbar);
 					application.refreshOnline();
-				} else
+				}
+				else
 				{
-					Toast.makeText(application.getBaseContext(),
-							"Veuillez activer votre connexion internet", 3).show();
+					Toast.makeText(application.getBaseContext(), "Veuillez activer votre connexion internet", 3).show();
 				}
 
 				break;

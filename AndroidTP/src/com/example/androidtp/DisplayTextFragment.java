@@ -14,7 +14,7 @@ import com.example.androidtp.model.ObjMediaInfo;
 public class DisplayTextFragment extends Fragment
 {
 
-	GlobalMethods application;
+	private GlobalMethods application;
 	private String tag = "DisplayTextFragment";
 
 	/**
@@ -22,11 +22,9 @@ public class DisplayTextFragment extends Fragment
 	 */
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState)
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
-		View view = inflater.inflate(R.layout.displaytextfragment, container,
-				false);
+		View view = inflater.inflate(R.layout.displaytextfragment, container, false);
 		application = (GlobalMethods) getActivity().getApplicationContext();
 
 		setHasOptionsMenu(true);
@@ -40,7 +38,7 @@ public class DisplayTextFragment extends Fragment
 
 		viewTitre.setText(newObjDetail.get_name());
 		viewPath.setText(newObjDetail.get_url());
-		image.setImageResource(R.drawable.text);
+		image.setImageResource(R.drawable.text_file);
 		contentText.setText(newObjDetail.get_content());
 
 		return view;
