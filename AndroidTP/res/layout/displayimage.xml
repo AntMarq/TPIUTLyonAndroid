@@ -5,7 +5,7 @@
 
     <fragment
         android:id="@+id/fragmentimage"
-        android:name="com.example.androidtp.DisplayImageFragment"
+        android:name="com.example.androidtp.displaydetailsfragment.DisplayDetailsImageFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

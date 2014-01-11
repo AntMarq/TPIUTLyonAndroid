@@ -1,11 +1,14 @@
-package com.example.androidtp;
+package com.example.androidtp.displaydetailsfragment;
+
+import com.example.androidtp.R;
+import com.example.androidtp.R.layout;
 
 import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
-public class DisplaySon extends FragmentActivity
+public class DisplayDetailsSon extends FragmentActivity
 {
 	static final String NAME = "DisplaySon";
 

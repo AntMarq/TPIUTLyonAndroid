@@ -1,6 +1,14 @@
 package com.example.androidtp;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlPullParserFactory;
 
 import android.app.Application;
 import android.content.Context;
@@ -9,7 +17,7 @@ import android.net.NetworkInfo;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.example.androidtp.model.MediaLoaderAsync_task;
+import com.example.androidtp.loader.MediaLoaderAsync_task;
 import com.example.androidtp.model.MediaManager;
 import com.example.androidtp.model.ObjMediaInfo;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -36,6 +44,98 @@ public class GlobalMethods extends Application
 		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getApplicationContext()).build();
 		ImageLoader.getInstance().init(config);
 	}
+	
+	public void loadOfflineData()
+	{
+		ObjMediaInfo newMediaObj = null;
+		
+		File file = new File(MediaManager.getInstance().getDirectorypath()+ MediaManager.getInstance().getFILENAME());
+		if(file.length() > 0)
+		{
+			Log.v(tag, "chargement fichier locale");
+				try
+				{
+					XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
+					factory.setNamespaceAware(true);
+					XmlPullParser parser = factory.newPullParser();
+		
+					
+					FileInputStream fis = new FileInputStream(file);
+					parser.setInput(new InputStreamReader(fis));
+		
+					int eventType = parser.getEventType();
+		
+					while (eventType != XmlPullParser.END_DOCUMENT)
+					{
+						String name = null;
+						switch (eventType)
+						{
+							case XmlPullParser.START_DOCUMENT :
+								break;
+		
+							case XmlPullParser.START_TAG :						
+								name = parser.getName();
+		
+								if (name.equalsIgnoreCase("media"))
+								{
+									newMediaObj = new ObjMediaInfo();
+									newMediaObj.set_name(parser.getAttributeValue(null, "name"));
+									newMediaObj.set_type(parser.getAttributeValue(null, "type"));
+									newMediaObj.set_url(parser.getAttributeValue(null, "path"));
+									newMediaObj.set_version(parser.getAttributeValue(null, "versionCode"));
+								}
+		
+								break;
+							case XmlPullParser.END_TAG :
+		
+								name = parser.getName();
+								if (name.equalsIgnoreCase("media") && newMediaObj != null)
+								{
+		
+									if (newMediaObj.get_type().equalsIgnoreCase("video"))
+									{
+										if (MediaManager.getInstance().videoArrayContainMediaObject(newMediaObj) == false)
+											MediaManager.getInstance().getVideoMedia().add(newMediaObj);
+									}
+									else if (newMediaObj.get_type().equalsIgnoreCase("audio"))
+									{
+										if (MediaManager.getInstance().sonArrayContainMediaObject(newMediaObj) == false)
+											MediaManager.getInstance().getAudioMedia().add(newMediaObj);
+									}
+									else if (newMediaObj.get_type().equalsIgnoreCase("image"))
+									{
+										if (MediaManager.getInstance().imageArrayContainMediaObject(newMediaObj) == false)
+											MediaManager.getInstance().getPictureMedia().add(newMediaObj);
+									}
+									else
+									{
+										if (MediaManager.getInstance().textArrayContainMediaObject(newMediaObj) == false)
+											MediaManager.getInstance().getTexteMedia().add(newMediaObj);
+									}
+								}
+						}
+						eventType = parser.next();
+					}
+					MediaManager.getInstance().triggerObservers();
+		
+				}
+				catch (FileNotFoundException e)
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				catch (XmlPullParserException e)
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				catch (IOException e)
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
 
 	/**
 	 * Check internet connexion
@@ -62,7 +162,7 @@ public class GlobalMethods extends Application
 	{
 		if (this.isOnline(this.getBaseContext()) == true)
 		{
-			Log.v(tag, "isOnline");
+			Log.v(tag, "refreshOnline");
 			
 			File dir = new File(MediaManager.getInstance().getDirectorypath()) ;
 			Log.v(tag, "before delete file");
@@ -76,11 +176,11 @@ public class GlobalMethods extends Application
 		        }
 			}
 	
-			new MediaLoaderAsync_task().execute(MediaManager.getInstance().getURL(), MediaManager.getInstance().getDirectorypath(), MediaManager.getInstance().getFILENAME());
-		} else
+			new MediaLoaderAsync_task(this.getBaseContext()).execute(MediaManager.getInstance().getURL(), MediaManager.getInstance().getDirectorypath(), MediaManager.getInstance().getFILENAME());
+		} 
+		else
 		{
-			Toast.makeText(this.getBaseContext(), "Réseau non disponible, veuillez vérifier votre connexion internet",
-					3).show();
+			Toast.makeText(this.getBaseContext(), "Réseau non disponible, veuillez vérifier votre connexion internet",3).show();
 
 		}
 	}

@@ -1,4 +1,4 @@
-package com.example.androidtp.model;
+package com.example.androidtp.loader;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -14,32 +14,50 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 
+import com.example.androidtp.GlobalMethods;
+import com.example.androidtp.model.MediaManager;
+import com.example.androidtp.model.ObjMediaInfo;
+
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Message;
 import android.util.Log;
+import android.widget.ProgressBar;
+import android.widget.Toast;
+
 
 public class MediaLoaderAsync_task extends AsyncTask<String, Integer, String>
 {
 
 	private String tag = "MediaLoaderAsync_task";
-	ObjMediaInfo newMediaObj = null;
-
-	public MediaLoaderAsync_task()
+	private ObjMediaInfo newMediaObj = null;
+	private ProgressBar pb;
+	private Context context;
+	private GlobalMethods application;
+	private ProgressDialog dialog;
+	private boolean firstLaunch;
+	
+	public MediaLoaderAsync_task(Context context)
 	{
 		super();
+		this.context = context;	
 	}
 
 	@Override
 	protected void onPreExecute()
 	{
-
+		firstLaunch = context.getSharedPreferences("PREFERENCE", context.MODE_PRIVATE).getBoolean("firstrun", true); ;
+		Log.v(tag, "onPreExecute" + firstLaunch );
+		if(firstLaunch)
+		{
+			 dialog= new ProgressDialog(context);
+	         dialog.setIndeterminate(true);
+	         dialog.setCancelable(false);
+	         dialog.setMessage("Downloading! Please wait...!");
+	         dialog.show();    
+		}
 	};
-
-	@Override
-	protected void onProgressUpdate(Integer... progress)
-	{
-
-	}
 
 	@Override
 	protected String doInBackground(String... params)
@@ -47,7 +65,7 @@ public class MediaLoaderAsync_task extends AsyncTask<String, Integer, String>
 		Log.v(tag, "doInBackground Principale");
 		String sResponse;
 		StringBuilder sb = new StringBuilder();
-
+			
 		try
 		{
 			/**
@@ -100,7 +118,7 @@ public class MediaLoaderAsync_task extends AsyncTask<String, Integer, String>
 	protected void onPostExecute(String result)
 	{
 		Log.v(tag, "onPostExecute" + result);
-		Message msg = new Message();
+		application = (GlobalMethods)context.getApplicationContext ();
 		if (result != null)
 		{
 
@@ -178,6 +196,7 @@ public class MediaLoaderAsync_task extends AsyncTask<String, Integer, String>
 				/**
 				 * Parse XML finish
 				 */
+				 
 			}
 			catch (XmlPullParserException e)
 			{
@@ -191,7 +210,11 @@ public class MediaLoaderAsync_task extends AsyncTask<String, Integer, String>
 		}
 		else
 		{
-
+			Toast.makeText (application.getBaseContext(), "Erreur lors de la recuperation des données", 3).show ();
+			if(firstLaunch)
+			{
+				dialog.dismiss();
+			}		
 			Log.e(tag, "Une erreur est survenue pendant la recuperation du flux RSS");
 
 		}
@@ -205,10 +228,11 @@ public class MediaLoaderAsync_task extends AsyncTask<String, Integer, String>
 	private class GetTextFile extends AsyncTask<String, Integer, String>
 	{
 		private String ObjName;
-
+	
 		@Override
 		protected String doInBackground(String... params)
 		{
+			Log.v(tag, "doInBackground Seconddaire");
 			ObjName = params[1];
 			int count;
 			String sResponse;
@@ -247,6 +271,10 @@ public class MediaLoaderAsync_task extends AsyncTask<String, Integer, String>
 			}
 			catch (Exception e)
 			{
+				if(firstLaunch)
+				{
+					dialog.dismiss();
+				}		
 				Log.e("ERROR DOWNLOADING", "Unable to download" + e.getMessage());
 			}
 			return null;
@@ -266,7 +294,10 @@ public class MediaLoaderAsync_task extends AsyncTask<String, Integer, String>
 
 				}
 			}
+			if(firstLaunch)
+			{
+				dialog.dismiss();
+			}			
 		}
-
 	}
 }

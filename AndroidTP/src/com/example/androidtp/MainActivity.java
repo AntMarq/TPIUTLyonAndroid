@@ -1,21 +1,10 @@
 package com.example.androidtp;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
-import org.xmlpull.v1.XmlPullParserFactory;
-
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -24,7 +13,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
-import android.util.Xml;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -33,10 +21,10 @@ import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.example.androidtp.loader.MediaLoaderAsync_task;
 import com.example.androidtp.model.ArrayDrawerData;
 import com.example.androidtp.model.MediaManager;
 import com.example.androidtp.model.ObjDrawer;
-import com.example.androidtp.model.ObjMediaInfo;
 import com.example.androidtp.view.CustomArrayAdapter;
 
 public class MainActivity extends FragmentActivity
@@ -54,7 +42,9 @@ public class MainActivity extends FragmentActivity
 	private Fragment fragment;
 	private ArrayDrawerData dataDrawer;
 	private GlobalMethods application;
-	private Context context;
+	boolean firstrun = false;
+
+	private MediaLoaderAsync_task mediaLoader;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -62,7 +52,7 @@ public class MainActivity extends FragmentActivity
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		setContentView(R.layout.activity_main);
-
+		application = (GlobalMethods) this.getApplicationContext();
 		mTitle = mDrawerTitle = getTitle();
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		mDrawerList = (ListView) findViewById(R.id.left_drawer);
@@ -111,7 +101,26 @@ public class MainActivity extends FragmentActivity
 		 */
 		if (savedInstanceState == null)
 		{
+			Log.v(tag, "savedInstanceState" );
 			GlobalMethods.ManageDirectory(MediaManager.getInstance().getDirectorypath());
+			firstrun = getSharedPreferences("PREFERENCE", MODE_PRIVATE).getBoolean("firstrun", true);
+	 	    if (firstrun && application.isOnline(this))
+	 	    {
+	 	    	Log.v(tag, "firstRun"  + firstrun);
+				mediaLoader = new MediaLoaderAsync_task(this);
+				mediaLoader.execute(MediaManager.getInstance().getURL(), MediaManager.getInstance().getDirectorypath(), MediaManager.getInstance().getFILENAME());
+	 	    }
+	 	    else
+	 	    {
+	 				application.loadOfflineData();		
+	 	    }
+	 	// Save the state with shared preferences
+	 	    getSharedPreferences("PREFERENCE", MODE_PRIVATE)
+	 	    	.edit()
+	 	        .putBoolean("firstrun", false)
+	 	        .commit();
+	 	    
+	 	//Select Video Fragment
 			selectItem(1);
 		}
 	}
@@ -157,17 +166,6 @@ public class MainActivity extends FragmentActivity
 	{
 		FragmentManager manager = getSupportFragmentManager();
 		FragmentTransaction ft = manager.beginTransaction();
-		application = (GlobalMethods) this.getApplicationContext();
-
-		if (application.isOnline(this) == true)
-		{
-			MediaManager.getInstance();
-		}
-		else
-		{
-			// parse fichier local xml
-			loadOfflineData();
-		}
 
 		switch (position)
 		{
@@ -237,95 +235,43 @@ public class MainActivity extends FragmentActivity
 		// Pass any configuration change to the drawer toggls
 		mDrawerToggle.onConfigurationChanged(newConfig);
 	}
-
-	public void loadOfflineData()
+	
+	public void onResume()
 	{
-		ObjMediaInfo newMediaObj = null;
-		Log.v(tag, "pas co , charge fichier locale");
+		Log.v(tag, "onResume");
+		super.onResume();
+		 ComponentName receiver = new ComponentName(this, DMBroadcastReceiver.class);
+	    if(receiver != null)
+	    {
+	    	PackageManager pm = this.getPackageManager();
+	    	pm.setComponentEnabledSetting(receiver,
+	            PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+	            PackageManager.DONT_KILL_APP);
+	
+	    }	
+	}
 
-		try
-		{
-			XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
-			factory.setNamespaceAware(true);
-			XmlPullParser parser = factory.newPullParser();
-
-			File file = new File(MediaManager.getInstance().getDirectorypath()+ MediaManager.getInstance().getFILENAME());
-			FileInputStream fis = new FileInputStream(file);
-			parser.setInput(new InputStreamReader(fis));
-
-			int eventType = parser.getEventType();
-
-			while (eventType != XmlPullParser.END_DOCUMENT)
-			{
-				String name = null;
-				switch (eventType)
-				{
-					case XmlPullParser.START_DOCUMENT :
-						break;
-
-					case XmlPullParser.START_TAG :						
-						name = parser.getName();
-
-						if (name.equalsIgnoreCase("media"))
-						{
-							newMediaObj = new ObjMediaInfo();
-							newMediaObj.set_name(parser.getAttributeValue(null, "name"));
-							newMediaObj.set_type(parser.getAttributeValue(null, "type"));
-							newMediaObj.set_url(parser.getAttributeValue(null, "path"));
-							newMediaObj.set_version(parser.getAttributeValue(null, "versionCode"));
-							Log.v(tag, "name" + newMediaObj.get_name());
-						}
-
-						break;
-					case XmlPullParser.END_TAG :
-
-						name = parser.getName();
-						Log.v(tag, "name = " + name);
-						if (name.equalsIgnoreCase("media") && newMediaObj != null)
-						{
-
-							if (newMediaObj.get_type().equalsIgnoreCase("video"))
-							{
-								if (MediaManager.getInstance().videoArrayContainMediaObject(newMediaObj) == false)
-									MediaManager.getInstance().getVideoMedia().add(newMediaObj);
-							}
-							else if (newMediaObj.get_type().equalsIgnoreCase("audio"))
-							{
-								if (MediaManager.getInstance().sonArrayContainMediaObject(newMediaObj) == false)
-									MediaManager.getInstance().getAudioMedia().add(newMediaObj);
-							}
-							else if (newMediaObj.get_type().equalsIgnoreCase("image"))
-							{
-								if (MediaManager.getInstance().imageArrayContainMediaObject(newMediaObj) == false)
-									MediaManager.getInstance().getPictureMedia().add(newMediaObj);
-							}
-							else
-							{
-								if (MediaManager.getInstance().textArrayContainMediaObject(newMediaObj) == false)
-									MediaManager.getInstance().getTexteMedia().add(newMediaObj);
-								
-							}
-						}
-				}
-				eventType = parser.next();
-			}
-			MediaManager.getInstance().triggerObservers();
-
-		}
-		catch (FileNotFoundException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		catch (XmlPullParserException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		catch (IOException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public void onPause()
+	{
+		Log.v(tag, "onPause");
+		super.onPause();
+		 ComponentName receiver = new ComponentName(this, DMBroadcastReceiver.class);
+	      PackageManager pm = this.getPackageManager();
+	 
+	      pm.setComponentEnabledSetting(receiver,
+	              PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+	              PackageManager.DONT_KILL_APP);
+	}
+	
+	public void onDestroy()
+	{
+		Log.v(tag, "onDestroy");
+		super.onDestroy();
+		ComponentName receiver = new ComponentName(this, DMBroadcastReceiver.class);
+	      PackageManager pm = this.getPackageManager();
+	 
+	      pm.setComponentEnabledSetting(receiver,
+	              PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+	              0);
 	}
 }

@@ -1,7 +1,8 @@
-package com.example.androidtp;
+package com.example.androidtp.displaydetailsfragment;
 
-import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -9,37 +10,41 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.androidtp.GlobalMethods;
+import com.example.androidtp.R;
+import com.example.androidtp.R.drawable;
+import com.example.androidtp.R.id;
+import com.example.androidtp.R.layout;
 import com.example.androidtp.model.ObjMediaInfo;
 
-public class DisplayTextFragment extends Fragment
+public class DisplayDetailsVideoFragment extends Fragment
 {
-
-	private GlobalMethods application;
-	private String tag = "DisplayTextFragment";
+	GlobalMethods application;
+	String tag = "DisplayVideoFragment";
 
 	/**
 	 * Show details for item Text
 	 */
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState)
 	{
-		View view = inflater.inflate(R.layout.displaytextfragment, container, false);
+		View view = inflater.inflate(R.layout.displayvideofragment, container,
+				false);
 		application = (GlobalMethods) getActivity().getApplicationContext();
-
 		setHasOptionsMenu(true);
 
 		TextView viewTitre = (TextView) view.findViewById(R.id.titre);
 		TextView viewPath = (TextView) view.findViewById(R.id.path);
-		ImageView image = (ImageView) view.findViewById(R.id.imageText);
-		TextView contentText = (TextView) view.findViewById(R.id.contenttext);
+		ImageView image = (ImageView) view.findViewById(R.id.imageVideo);
 
 		ObjMediaInfo newObjDetail = application.getSelectedObjMediaInfo();
 
+		Log.v(tag, "objdetail = " + newObjDetail);
 		viewTitre.setText(newObjDetail.get_name());
 		viewPath.setText(newObjDetail.get_url());
-		image.setImageResource(R.drawable.text_file);
-		contentText.setText(newObjDetail.get_content());
+		image.setImageResource(R.drawable.video_player);
 
 		return view;
 	}
@@ -51,12 +56,11 @@ public class DisplayTextFragment extends Fragment
 		if (item.getTitle().toString()
 				.contentEquals(getActivity().getActionBar().getTitle()))
 		{
-			/**
-			 * clic sur l'icone de l'appli donc retour activity precedente
-			 */
+			// clic sur l'icone de l'appli donc retour activity précédente
 			getActivity().finish();
 		}
 
 		return false;
 	}
+
 }

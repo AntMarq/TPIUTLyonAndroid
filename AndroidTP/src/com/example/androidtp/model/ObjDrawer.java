@@ -5,6 +5,7 @@ public class ObjDrawer
 
 	private int icon;
 	private String title;
+	private int counter;
 
 	public ObjDrawer()
 	{
@@ -27,10 +28,20 @@ public class ObjDrawer
 	{
 		this.title = title;
 	}
-	@Override
-	public String toString()
-	{
-		return "ObjDrawer [icon=" + icon + ", title=" + title + "]";
+
+	public int getCounter() {
+		return counter;
 	}
+
+	public void setCounter(int counter) {
+		this.counter = counter;
+	}
+
+	@Override
+	public String toString() {
+		return "ObjDrawer [icon=" + icon + ", title=" + title + ", counter="
+				+ counter + "]";
+	}
+	
 
 }

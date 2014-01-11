@@ -1,5 +1,7 @@
 package com.example.androidtp;
 
+import com.example.androidtp.model.MediaManager;
+
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
@@ -9,7 +11,7 @@ public class DMService extends Service
 {
 	private String tag = "DMService" ;
 	boolean mIsRunning = false;
-
+	
 	@Override
 	public IBinder onBind(Intent intent)
 	{
@@ -19,14 +21,15 @@ public class DMService extends Service
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId)
 	{
-		Log.v(tag, "DMService");
+		Log.v(tag, "onStartCommand");
 		if (!mIsRunning)
 		{
-			Log.e("INFO : ", "SERVICE STARTED");
+			Log.e("INFO : ", "SERVICE STARTED");		
 			mIsRunning = true;
 		}
 		GlobalMethods application = (GlobalMethods) getApplicationContext();
 		application.refreshOnline();
+		
 		return START_STICKY;
 	}
 

@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.androidtp.displaydetailsfragment.DisplayDetailsImage;
 import com.example.androidtp.model.MediaManager;
 import com.example.androidtp.model.ObjMediaInfo;
 import com.example.androidtp.view.ImageCustomAdapter;
@@ -76,7 +77,7 @@ public class ImageFragment extends ListFragment implements Observer
 		else
 		{
 			application.setSelectedObjMediaInfo(detailsImage);
-			Intent intent = new Intent(getActivity().getApplicationContext(), DisplayImage.class);
+			Intent intent = new Intent(getActivity().getApplicationContext(), DisplayDetailsImage.class);
 			String abTitle = MediaManager.getInstance().getPictureMedia().get(position).get_name();
 			/**
 			 * Add title in the next fragment actionbar

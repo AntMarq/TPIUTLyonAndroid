@@ -3,6 +3,7 @@ package com.example.androidtp;
 import java.util.Observable;
 import java.util.Observer;
 
+import com.example.androidtp.displaydetailsfragment.DisplayDetailsText;
 import com.example.androidtp.model.MediaManager;
 import com.example.androidtp.model.ObjMediaInfo;
 import com.example.androidtp.view.TextCustomAdapter;
@@ -80,7 +81,7 @@ public class TextFragment extends ListFragment implements Observer
 		else
 		{
 			application.setSelectedObjMediaInfo(detailsText);
-			Intent intent = new Intent(getActivity().getApplicationContext(), DisplayText.class);
+			Intent intent = new Intent(getActivity().getApplicationContext(), DisplayDetailsText.class);
 			String abTitle = MediaManager.getInstance().getTexteMedia().get(position).get_name();
 			/**
 			 * Add title in the next fragment actionbar

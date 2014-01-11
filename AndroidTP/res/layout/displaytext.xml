@@ -5,7 +5,7 @@
 
     <fragment
         android:id="@+id/fragmenttext"
-        android:name="com.example.androidtp.DisplayTextFragment"
+        android:name="com.example.androidtp.displaydetailsfragment.DisplayDetailsTextFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

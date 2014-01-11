@@ -1,15 +1,12 @@
-package com.example.androidtp;
+package com.example.androidtp.displaydetailsfragment;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.net.URL;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -20,11 +17,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.androidtp.GlobalMethods;
+import com.example.androidtp.R;
+import com.example.androidtp.R.id;
+import com.example.androidtp.R.layout;
+import com.example.androidtp.loader.DownloadImages;
 import com.example.androidtp.model.MediaManager;
 import com.example.androidtp.model.ObjMediaInfo;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-public class DisplayImageFragment extends Fragment
+public class DisplayDetailsImageFragment extends Fragment
 {
 	private GlobalMethods application;
 	private String tag = "DisplayImageFragment";
@@ -47,7 +49,6 @@ public class DisplayImageFragment extends Fragment
 
 		viewTitre.setText("Titre : " + newObjDetail.get_name());	
 		contentText.setText(advice);
-		Log.v(tag, "newObjDetail.get_imageView() = "  + newObjDetail.get_imageView());
 		
 		if(newObjDetail.get_imageView() != null)
 		{
@@ -70,6 +71,7 @@ public class DisplayImageFragment extends Fragment
 
 		image.setOnClickListener(new View.OnClickListener()
 		{
+			
 			public void onClick(View v)
 			{
 				AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -93,7 +95,7 @@ public class DisplayImageFragment extends Fragment
 						String imageName = newObjDetail.get_name();
 						String urlImage = MediaManager.getInstance().getBaseUrl() + newObjDetail.get_url();
 						String path = MediaManager.getInstance().getDirectorypath();
-						new DownloadImage().execute (urlImage,path,imageName);
+						new DownloadImages(getActivity()).execute (urlImage,path,imageName);
 						
 					}
 				});
@@ -104,56 +106,18 @@ public class DisplayImageFragment extends Fragment
 		return view;
 	}
 	
-	private class DownloadImage extends AsyncTask<String, Integer, String>
-	{
-	
-
-		@Override
-		protected String doInBackground(String... params)
-		{
-			//Fonction de telechargement de l'image
-			Log.v(tag, "telechargement de l'image");
-			try
-			{
-				URL urlimage = new URL(params[0]);
-				
-				int count;
-
-				InputStream is = urlimage.openStream();
-				
-				FileOutputStream fos = new FileOutputStream(params[1] + params[2] + ".png");
-				byte data[] = new byte[1024];
-				long total = 0;
-
-				while ((count = is.read(data)) != -1)
-				{
-					total += count;
-					fos.write(data, 0, count);
-				}
-				is.close();
-				fos.close();
-			}
-			catch (Exception e)
-			{
-				Log.e("ERROR DOWNLOADING", "Unable to download" + e.getMessage());
-			}
-			return null;
-		}
-	}	
-
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item)
 	{
 
 		if (item.getTitle().toString().contentEquals(getActivity().getActionBar().getTitle()))
 		{
-			/**
-			 * clic sur l'icone de l'appli donc retour activity precedente
-			 */
+			
+			//  clic sur l'icone de l'appli donc retour activity precedente
+			 
 			getActivity().finish();
 		}
 
 		return false;
 	}
-
-}
+}	

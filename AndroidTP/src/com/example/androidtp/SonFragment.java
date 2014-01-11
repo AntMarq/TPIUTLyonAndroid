@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.androidtp.displaydetailsfragment.DisplayDetailsSon;
 import com.example.androidtp.model.MediaManager;
 import com.example.androidtp.model.ObjMediaInfo;
 import com.example.androidtp.view.SonCustomAdapter;
@@ -73,7 +74,7 @@ public class SonFragment extends ListFragment implements Observer
 		else
 		{
 			application.setSelectedObjMediaInfo(detailsSon);
-			Intent intent = new Intent(getActivity().getApplicationContext(), DisplaySon.class);
+			Intent intent = new Intent(getActivity().getApplicationContext(), DisplayDetailsSon.class);
 			String abTitle = MediaManager.getInstance().getAudioMedia().get(position).get_name();
 			/**
 			 * Add title in the next fragment actionbar

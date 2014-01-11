@@ -4,11 +4,13 @@ import java.util.ArrayList;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.androidtp.R;
@@ -22,6 +24,7 @@ import com.nostra13.universalimageloader.core.assist.ImageLoadingListener;
 public class ImageCustomAdapter extends BaseAdapter
 {
 	private Context mContext;
+	String tag = "ImageCustomAdapter";
 	private ArrayList<ObjMediaInfo> newPictureList;
 	private LayoutInflater inflater;
 	private ImageLoader imageLoader = ImageLoader.getInstance();
@@ -67,8 +70,10 @@ public class ImageCustomAdapter extends BaseAdapter
 			holder.titlePicture = (TextView) convertView.findViewById(R.id.titre);
 			holder.imagePicture = (ImageView) convertView.findViewById(R.id.image);
 			holder.pathPicture = (TextView) convertView.findViewById(R.id.textpath);
+			holder.progressBar = (ProgressBar) convertView.findViewById(R.id.progressBar1);
 			convertView.setTag(holder);
-		} else
+		} 
+		else
 		{
 			holder = (ViewHolder) convertView.getTag();
 		}
@@ -79,6 +84,7 @@ public class ImageCustomAdapter extends BaseAdapter
 		holder.pathPicture.setText((objMedia.get_url()));
 
 		final ViewHolder finalHolder = holder;
+	
 		if (objMedia.get_url() != null)
 		{
 
@@ -91,7 +97,8 @@ public class ImageCustomAdapter extends BaseAdapter
 						@Override
 						public void onLoadingStarted(String imageUri, View view)
 						{
-							finalHolder.imagePicture.setImageResource(R.drawable.picture);
+							finalHolder.imagePicture.setImageResource(R.drawable.picture); 
+							finalHolder.progressBar.setVisibility(View.VISIBLE);
 						}
 						@Override
 						public void onLoadingFailed(String imageUri, View view, FailReason failReason)
@@ -102,12 +109,12 @@ public class ImageCustomAdapter extends BaseAdapter
 						@Override
 						public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage)
 						{
-
+							finalHolder.progressBar.setVisibility(View.GONE);
 						}
 						@Override
 						public void onLoadingCancelled(String imageUri, View view)
 						{
-
+							finalHolder.progressBar.setVisibility(View.GONE);
 						}
 
 					});
@@ -128,6 +135,7 @@ public class ImageCustomAdapter extends BaseAdapter
 		TextView titlePicture;
 		TextView pathPicture;
 		ImageView imagePicture;
+		ProgressBar progressBar;
 
 	}
 }

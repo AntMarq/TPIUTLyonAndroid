@@ -1,4 +1,4 @@
-package com.example.androidtp;
+package com.example.androidtp.displaydetailsfragment;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -11,9 +11,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.androidtp.GlobalMethods;
+import com.example.androidtp.R;
+import com.example.androidtp.R.drawable;
+import com.example.androidtp.R.id;
+import com.example.androidtp.R.layout;
+import com.example.androidtp.model.MediaManager;
 import com.example.androidtp.model.ObjMediaInfo;
 
-public class DisplaySonFragment extends Fragment
+public class DisplayDetailsSonFragment extends Fragment
 {
 	private GlobalMethods application;
 	private String tag = "DisplaySonFragment";
@@ -36,7 +42,7 @@ public class DisplaySonFragment extends Fragment
 		ImageView image = (ImageView) view.findViewById(R.id.imageSon);
 		TextView contentText = (TextView) view.findViewById(R.id.contentson);
 
-		ObjMediaInfo newObjDetail = application.getSelectedObjMediaInfo();
+		final ObjMediaInfo newObjDetail = application.getSelectedObjMediaInfo();
 
 		viewTitre.setText("Titre : " + newObjDetail.get_name());
 		viewPath.setText("Url : " + newObjDetail.get_url());
@@ -46,7 +52,7 @@ public class DisplaySonFragment extends Fragment
 		image.setOnClickListener(new View.OnClickListener(){
 		    public void onClick(View v) 
 		    {
-		    	Uri myUri = Uri.parse("http://lionel.banand.free.fr/lp_iem/data/medias/AAA/audios/01-The_Shattering.mp3");
+		    	Uri myUri = Uri.parse(MediaManager.getInstance().getBaseUrl() + newObjDetail.get_url());
 		    	Intent intent = new Intent(android.content.Intent.ACTION_VIEW); 
 		    	intent.setDataAndType(myUri, "audio/*"); 
 		    	startActivity(intent);

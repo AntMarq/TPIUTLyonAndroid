@@ -3,12 +3,13 @@ package com.example.androidtp;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.net.wifi.WifiManager;
 import android.util.Log;
 import android.widget.Toast;
 
-/**
- * Created by lionelbanand on 15/12/13.
- */
+
 public class DMBroadcastReceiver extends BroadcastReceiver
 {
 
@@ -17,25 +18,32 @@ public class DMBroadcastReceiver extends BroadcastReceiver
 
 	@Override
 	public void onReceive(Context context, Intent intent)
-	{
+	{	
+    
 		String action = intent.getAction();
-		if (action != null && action.equals("android.net.conn.CONNECTIVITY_CHANGE"))
+	GlobalMethods application = (GlobalMethods) context.getApplicationContext();
+		Log.e("INFO : ", "Broadcast Receive Start");
+		if(action.equals(WifiManager.NETWORK_STATE_CHANGED_ACTION)) 
 		{
-			Log.e("INFO : ", "Broadcast Receive");
-			Intent serviceIntent = new Intent(context, DMService.class);
-			context.startService(serviceIntent);
+		    NetworkInfo networkInfo = intent.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO);
+		    if(networkInfo.isConnected())
+		    {
+		    	Log.e("INFO : ", "Broadcast Receive");
+				Toast.makeText(context, "Réseau internet disponible", 3).show();
+				Intent serviceIntent = new Intent(context, DMService.class);
+				context.startService(serviceIntent);
+		    }
 		}
-		
-		GlobalMethods application = (GlobalMethods)context.getApplicationContext();
-		
-		if (application.isOnline(context) == true)
+		else if(action.equals(ConnectivityManager.CONNECTIVITY_ACTION)) 
 		{
-			
-			Toast.makeText(application.getBaseContext(), "Réseau internet disponible", 3).show();
-		} else
-		{
-			Toast.makeText(application.getBaseContext(),
-					"Réseau non disponible, veuillez vérifier votre connexion internet", 3).show();
+		    NetworkInfo networkInfo =intent.getParcelableExtra(ConnectivityManager.EXTRA_NETWORK_INFO);
+		    if(networkInfo.getType() == ConnectivityManager.TYPE_WIFI && ! networkInfo.isConnected()) 
+		    {
+
+		        // Wifi is disconnected
+		    	Toast.makeText(context,
+						"Réseau non disponible, veuillez vérifier votre connexion internet", 3).show();
+		    }
 		}
 	}
 }

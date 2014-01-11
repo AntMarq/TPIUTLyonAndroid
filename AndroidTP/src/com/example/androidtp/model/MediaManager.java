@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.Observable;
 
 import com.example.androidtp.DMBroadcastReceiver;
+import com.example.androidtp.loader.MediaLoaderAsync_task;
 
 import android.os.Environment;
 import android.os.Handler;
+import android.util.Log;
 
 public class MediaManager extends Observable
 {
@@ -20,31 +22,30 @@ public class MediaManager extends Observable
 	private final String DirectoryPath = Environment.getExternalStorageDirectory() + "/media/androidapp/";
 	private final String BaseUrl = "http://lionel.banand.free.fr/lp_iem";
 	private final long serialVersionUID = 1L;
-
+	private MediaLoaderAsync_task mediaLoader;
 	private static MediaManager mInstance = null;
 	private ArrayList<ObjMediaInfo> videoMedia;
 	private ArrayList<ObjMediaInfo> audioMedia;
 	private ArrayList<ObjMediaInfo> pictureMedia;
 	private ArrayList<ObjMediaInfo> texteMedia;
 	private ObjMediaInfo selectedObjMediaInfo;
-	private MediaLoaderAsync_task mediaLoader;
+	
 
 	private MediaManager()
 	{
 		super();
+		Log.v("INFO : ", "MediaManager");
 		videoMedia = new ArrayList<ObjMediaInfo>();
 		audioMedia = new ArrayList<ObjMediaInfo>();
 		pictureMedia = new ArrayList<ObjMediaInfo>();
 		texteMedia = new ArrayList<ObjMediaInfo>();
-		mediaLoader = new MediaLoaderAsync_task();
-		mediaLoader.execute(URL, DirectoryPath, FILENAME);
-
 	}
 
 	public static MediaManager getInstance()
 	{
 		if (mInstance == null)
 		{
+			Log.v("INFO : ", "MediaManager First time");
 			mInstance = new MediaManager();
 		}
 

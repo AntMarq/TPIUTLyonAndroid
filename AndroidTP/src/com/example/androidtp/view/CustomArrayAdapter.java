@@ -56,6 +56,7 @@ public class CustomArrayAdapter extends BaseAdapter
 	public View getView(int position, View convertView, ViewGroup parent)
 	{
 		int type = getItemViewType(position);
+		Object item =  getItem(position);
 		if (convertView == null)
 		{
 			holder = new ViewHolder();
@@ -67,6 +68,7 @@ public class CustomArrayAdapter extends BaseAdapter
 					convertView = inflater.inflate(R.layout.drawer_select_item, null);
 					holder.titre = (TextView) convertView.findViewById(R.id.item_title);
 					holder.image = (ImageView) convertView.findViewById(R.id.item_icon);
+			//		holder.textCounter = (TextView) convertView.findViewById(R.id.item_counter);
 					break;
 				case TYPE_SEPARATOR :
 					convertView = inflater.inflate(R.layout.liste_fragment_categ, null);
@@ -88,13 +90,26 @@ public class CustomArrayAdapter extends BaseAdapter
 				if (holder.titre.getText().equals("Video"))
 				{
 					holder.image.setImageResource(R.drawable.movie);
-				} else if (holder.titre.getText().equals("Son"))
+					/*//Counter
+	                if (holder.textCounter != null){                      
+	                       if (((ObjDrawer) item).getCounter() > 0){
+	                            holder.textCounter.setVisibility(View.VISIBLE);
+	                            holder.textCounter.setText(""+((ObjDrawer) item).getCounter());
+	                       }else{
+	                            //Hide counter if == 0 
+	                            holder.textCounter.setVisibility(View.GONE);
+	                       }
+	                }*/
+				} 
+				else if (holder.titre.getText().equals("Son"))
 				{
 					holder.image.setImageResource(R.drawable.sound);
-				} else if (holder.titre.getText().equals("Image"))
+				} 
+				else if (holder.titre.getText().equals("Image"))
 				{
 					holder.image.setImageResource(R.drawable.picture);
-				} else
+				} 
+				else
 				{
 					holder.image.setImageResource(R.drawable.text);
 				}
@@ -114,6 +129,7 @@ public class CustomArrayAdapter extends BaseAdapter
 		TextView categDrawer;
 		TextView titre;
 		ImageView image;
+		TextView textCounter;
 
 	}
 
