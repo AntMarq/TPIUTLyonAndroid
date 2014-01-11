@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.androidtp.displaydetailsfragment.DisplayDetailsVideo;
 import com.example.androidtp.model.MediaManager;
 import com.example.androidtp.model.ObjMediaInfo;
 import com.example.androidtp.view.VideoCustomAdapter;
@@ -78,7 +79,7 @@ public class VideoFragment extends ListFragment implements Observer
 		} else
 		{
 			application.setSelectedObjMediaInfo(detailsVideo);
-			Intent intent = new Intent(getActivity().getApplicationContext(), DisplayVideo.class);
+			Intent intent = new Intent(getActivity().getApplicationContext(), DisplayDetailsVideo.class);
 			String abTitle = MediaManager.getInstance().getVideoMedia().get(position).get_name();
 			// Add title in the next fragment actionbar
 			intent.putExtra("title", abTitle);
