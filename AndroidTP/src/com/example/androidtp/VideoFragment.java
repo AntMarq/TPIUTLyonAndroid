@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.ListFragment;
 import android.support.v4.view.MenuItemCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -29,6 +30,7 @@ public class VideoFragment extends ListFragment implements Observer
 	String tag = "VideoFRagment";
 	private GlobalMethods application;
 	private MenuItem mRefresh = null;
+	boolean showMainMenuSync = true;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -53,6 +55,7 @@ public class VideoFragment extends ListFragment implements Observer
 	@Override
 	public void update(Observable observable, Object data)
 	{
+		Log.v(tag, "update");
 		if (mRefresh != null)
 		{
 			MenuItemCompat.setActionView(mRefresh, null);
@@ -91,6 +94,13 @@ public class VideoFragment extends ListFragment implements Observer
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
 	{
 		inflater.inflate(R.menu.fragment_menu, menu);
+	}
+	
+	@Override
+	public void onPrepareOptionsMenu(Menu menu)
+	{
+	    super.onPrepareOptionsMenu(menu);
+	   
 	}
 
 	@Override

@@ -104,6 +104,7 @@ public class ImageCustomAdapter extends BaseAdapter
 						public void onLoadingFailed(String imageUri, View view, FailReason failReason)
 						{
 							finalHolder.imagePicture.setImageResource(R.drawable.picture);
+							finalHolder.progressBar.setVisibility(View.GONE);
 
 						}
 						@Override
@@ -122,9 +123,11 @@ public class ImageCustomAdapter extends BaseAdapter
 		{
 
 			holder.imagePicture.setImageBitmap(objMedia.get_imageView());
+			
 		} else
 		{
 			holder.imagePicture.setImageResource(R.drawable.picture);
+			
 		}
 
 		return convertView;

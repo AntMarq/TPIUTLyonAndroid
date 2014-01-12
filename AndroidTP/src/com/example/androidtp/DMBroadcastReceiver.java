@@ -14,6 +14,9 @@ public class DMBroadcastReceiver extends BroadcastReceiver
 {
 
 	private String tag = "DMBroadcastReceiver";
+	private ConnectivityManager connectManager ;
+	private GlobalMethods application;
+	NetworkInfo networkInfo;
 	
 
 	@Override
@@ -21,29 +24,23 @@ public class DMBroadcastReceiver extends BroadcastReceiver
 	{	
     
 		String action = intent.getAction();
-
+		networkInfo =intent.getParcelableExtra(ConnectivityManager.EXTRA_NETWORK_INFO);
 		Log.e("INFO : ", "Broadcast Receive Start");
-		if(action.equals(WifiManager.NETWORK_STATE_CHANGED_ACTION ) || action.equals(ConnectivityManager.TYPE_MOBILE)) 
+		if(action.equals(ConnectivityManager.CONNECTIVITY_ACTION)) 
 		{
 			Log.v(tag, "its cool");
-		    NetworkInfo networkInfo = intent.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO);
+		 //   networkInfo = intent.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO);
 		    if(networkInfo.isConnected())
 		    {
 		    	Log.e("INFO : ", "Broadcast Receive");
-				Toast.makeText(context, "Réseau internet disponible", 3).show();
+				Toast.makeText(context, "Réseau internet disponible", Toast.LENGTH_SHORT).show();
 				Intent serviceIntent = new Intent(context, DMService.class);
 				context.startService(serviceIntent);
 		    }
-		}
-		else if(action.equals(ConnectivityManager.CONNECTIVITY_ACTION)) 
-		{
-		    NetworkInfo networkInfo =intent.getParcelableExtra(ConnectivityManager.EXTRA_NETWORK_INFO);
-		    if(networkInfo.getType() == ConnectivityManager.TYPE_WIFI || networkInfo.getType() == ConnectivityManager.TYPE_ETHERNET  && ! networkInfo.isConnected()) 
+		    else
 		    {
-
-		        // Wifi is disconnected
 		    	Toast.makeText(context,
-						"Réseau non disponible, veuillez vérifier votre connexion internet", 3).show();
+						"Réseau non disponible, veuillez vérifier votre connexion internet", Toast.LENGTH_SHORT).show();
 		    }
 		}
 	}
