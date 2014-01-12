@@ -241,6 +241,7 @@ public class MainActivity extends FragmentActivity
 		Log.v(tag, "onResume");
 		super.onResume();
 		 ComponentName receiver = new ComponentName(this, DMBroadcastReceiver.class);
+		 Log.v(tag, "Enable Broadcast Receiver" + receiver);
 	    if(receiver != null)
 	    {
 	    	PackageManager pm = this.getPackageManager();
@@ -255,23 +256,20 @@ public class MainActivity extends FragmentActivity
 	{
 		Log.v(tag, "onPause");
 		super.onPause();
-		 ComponentName receiver = new ComponentName(this, DMBroadcastReceiver.class);
-	      PackageManager pm = this.getPackageManager();
-	 
-	      pm.setComponentEnabledSetting(receiver,
-	              PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
-	              PackageManager.DONT_KILL_APP);
+		disable(this);
 	}
 	
 	public void onDestroy()
 	{
 		Log.v(tag, "onDestroy");
 		super.onDestroy();
-		ComponentName receiver = new ComponentName(this, DMBroadcastReceiver.class);
-	      PackageManager pm = this.getPackageManager();
-	 
-	      pm.setComponentEnabledSetting(receiver,
-	              PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
-	              0);
+		
 	}
+	
+	public static void disable(Context context){
+
+		  ComponentName compName = new ComponentName(context, DMBroadcastReceiver.class);
+			Log.v(tag, "Disabled Broadcast Receiver" + compName);
+		  context.getPackageManager().setComponentEnabledSetting(compName, PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);  
+		 }
 }

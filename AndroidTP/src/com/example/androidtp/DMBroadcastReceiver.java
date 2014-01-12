@@ -21,10 +21,11 @@ public class DMBroadcastReceiver extends BroadcastReceiver
 	{	
     
 		String action = intent.getAction();
-	GlobalMethods application = (GlobalMethods) context.getApplicationContext();
+
 		Log.e("INFO : ", "Broadcast Receive Start");
-		if(action.equals(WifiManager.NETWORK_STATE_CHANGED_ACTION)) 
+		if(action.equals(WifiManager.NETWORK_STATE_CHANGED_ACTION ) || action.equals(ConnectivityManager.TYPE_MOBILE)) 
 		{
+			Log.v(tag, "its cool");
 		    NetworkInfo networkInfo = intent.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO);
 		    if(networkInfo.isConnected())
 		    {
@@ -37,7 +38,7 @@ public class DMBroadcastReceiver extends BroadcastReceiver
 		else if(action.equals(ConnectivityManager.CONNECTIVITY_ACTION)) 
 		{
 		    NetworkInfo networkInfo =intent.getParcelableExtra(ConnectivityManager.EXTRA_NETWORK_INFO);
-		    if(networkInfo.getType() == ConnectivityManager.TYPE_WIFI && ! networkInfo.isConnected()) 
+		    if(networkInfo.getType() == ConnectivityManager.TYPE_WIFI || networkInfo.getType() == ConnectivityManager.TYPE_ETHERNET  && ! networkInfo.isConnected()) 
 		    {
 
 		        // Wifi is disconnected
